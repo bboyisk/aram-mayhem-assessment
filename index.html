@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>ARAM Mayhem — Team Assessment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f4f1ea;
+        --bg-2: #ece7db;
+        --surface: #fffdf8;
+        --surface-2: #f8f4ea;
+        --ink: #1c1a15;
+        --ink-2: #4c463c;
+        --ink-3: #7a7263;
+        --line: #ddd4c2;
+        --line-strong: #c6b998;
+        --gold: #9a7414;
+        --gold-bright: #c8aa3a;
+        --gold-soft: #f3e8c8;
+        --teal: #0e6b5c;
+        --teal-soft: #d9ece7;
+        --red: #a8321f;
+        --red-soft: #f6e0d8;
+        --win: #0e6b5c;
+        --loss: #a8321f;
+        --header-bg: #14201d;
+        --header-ink: #f2ecdc;
+        --header-ink-2: #b9c4bd;
+        --chart-1: #9a7414;
+        --chart-2: #0e6b5c;
+        --chart-3: #5b4a9e;
+        --chart-4: #1f6fb2;
+        --chart-5: #a8321f;
+        --chart-6: #b44d7a;
+        --shadow: 0 1px 2px rgba(28,26,21,.06), 0 8px 24px rgba(28,26,21,.07);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #101613;
+          --bg-2: #0b0f0d;
+          --surface: #1a211d;
+          --surface-2: #212a25;
+          --ink: #ece7d8;
+          --ink-2: #c3bda9;
+          --ink-3: #8f8a79;
+          --line: #333d36;
+          --line-strong: #4a554d;
+          --gold: #d9b64a;
+          --gold-bright: #e8cc6a;
+          --gold-soft: #2e2a18;
+          --teal: #4fc4ab;
+          --teal-soft: #17332c;
+          --red: #e07a5f;
+          --red-soft: #38211b;
+          --win: #4fc4ab;
+          --loss: #e07a5f;
+          --header-bg: #0b100e;
+          --header-ink: #f2ecdc;
+          --header-ink-2: #9fb0a4;
+          --chart-1: #e8cc6a;
+          --chart-2: #4fc4ab;
+          --chart-3: #b3a6e8;
+          --chart-4: #7ab8e6;
+          --chart-5: #e07a5f;
+          --chart-6: #e58bb1;
+          --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Barlow", system-ui, -apple-system, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+      .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 56px; }
+
+      /* ---------- Header ---------- */
+      header.masthead {
+        background: var(--header-bg);
+        color: var(--header-ink);
+        border-bottom: 3px solid var(--gold-bright);
+      }
+      .masthead-inner { max-width: 1080px; margin: 0 auto; padding: 34px 20px 28px; }
+      .mode-line {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+        color: var(--gold-bright); margin: 0 0 10px;
+        display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center;
+      }
+      .mode-line .dot { color: var(--header-ink-2); }
+      h1 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700; font-size: clamp(36px, 6.5vw, 56px);
+        line-height: .98; letter-spacing: .01em; margin: 0 0 12px;
+        text-transform: uppercase;
+      }
+      h1 .accent { color: var(--gold-bright); }
+      .lede { color: var(--header-ink-2); font-size: 17px; max-width: 680px; margin: 0 0 20px; }
+      .lede strong { color: var(--header-ink); font-weight: 600; }
+      .freshness { display: flex; flex-wrap: wrap; gap: 10px; }
+      .freshness .chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        border: 1px solid rgba(242,236,220,.25);
+        border-radius: 999px; padding: 6px 14px;
+        font-size: 13.5px; color: var(--header-ink);
+        background: rgba(242,236,220,.06);
+      }
+      .freshness .chip b { color: var(--gold-bright); font-weight: 700; }
+      .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--gold-bright); flex: none; }
+
+      /* ---------- Sections ---------- */
+      section { margin-top: 40px; }
+      .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+      h2 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 28px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: .02em; margin: 0;
+      }
+      .section-note { color: var(--ink-3); font-size: 14px; margin: 0; max-width: 560px; }
+
+      /* ---------- Highlights strip ---------- */
+      .highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 28px; }
+      .hl {
+        background: var(--surface); border: 1px solid var(--line);
+        border-top: 3px solid var(--gold-bright);
+        border-radius: 10px; padding: 14px 16px 12px; box-shadow: var(--shadow);
+      }
+      .hl .hl-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin: 0 0 4px; }
+      .hl .hl-value { font-family: "JetBrains Mono", monospace; font-size: 24px; font-weight: 700; line-height: 1.1; margin: 0; }
+      .hl .hl-who { font-size: 14px; color: var(--ink-2); margin: 2px 0 0; font-weight: 600; }
+
+      /* ---------- Tables ---------- */
+      .table-card {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 12px; box-shadow: var(--shadow); overflow: hidden;
+      }
+      table { width: 100%; border-collapse: collapse; }
+      thead th {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+        color: var(--ink-2); text-align: right;
+        padding: 14px 12px 10px; border-bottom: 2px solid var(--line-strong);
+        white-space: nowrap;
+      }
+      thead th:first-child { text-align: left; padding-left: 16px; }
+      thead th:last-child { padding-right: 16px; }
+      thead th button {
+        font: inherit; color: inherit; background: none; border: 0; padding: 0;
+        cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+        text-transform: inherit; letter-spacing: inherit;
+      }
+      thead th button:hover { color: var(--gold); }
+      thead th button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; border-radius: 3px; }
+      .sort-arrow { font-size: 10px; color: var(--gold); visibility: hidden; }
+      th[aria-sort="ascending"] .sort-arrow, th[aria-sort="descending"] .sort-arrow { visibility: visible; }
+      tbody td {
+        padding: 13px 12px; border-bottom: 1px solid var(--line);
+        text-align: right; font-variant-numeric: tabular-nums; vertical-align: middle;
+      }
+      tbody td:first-child { padding-left: 16px; }
+      tbody td:last-child { padding-right: 16px; }
+      tbody tr:last-child td { border-bottom: 0; }
+      tbody tr:hover { background: var(--surface-2); }
+      td.player-cell { text-align: left; }
+      .p-name { font-weight: 700; font-size: 16.5px; display: block; line-height: 1.25; white-space: nowrap; }
+      .p-role { font-size: 13px; color: var(--ink-3); display: block; white-space: nowrap; }
+      .rec { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 15px; white-space: nowrap; }
+      .rec .w { color: var(--win); } .rec .l { color: var(--loss); } .rec .dash { color: var(--ink-3); margin: 0 2px; }
+      .num { font-family: "JetBrains Mono", monospace; font-size: 15px; font-weight: 500; white-space: nowrap; }
+      .num.big { font-weight: 700; }
+      .best { color: var(--gold); font-weight: 700; }
+      .worst { color: var(--red); }
+      .mpr-cell { min-width: 132px; background: var(--gold-soft); }
+      thead th.ps-head { background: var(--gold-soft); color: var(--ink); }
+      thead th.ps-head button { font-size: 15px; font-weight: 700; color: var(--gold); }
+      .mpr-value { font-family: "JetBrains Mono", monospace; font-size: 26px; font-weight: 700; line-height: 1.1; }
+      .mpr-value.top { color: var(--gold); }
+      .mpr-bar { height: 6px; border-radius: 3px; background: var(--bg-2); margin-top: 6px; overflow: hidden; }
+      .mpr-fill { height: 100%; background: var(--gold-bright); border-radius: 3px; }
+
+      /* Performance Scores ranking strip */
+      .ps-strip {
+        background: var(--header-bg); color: var(--header-ink);
+        border: 1px solid var(--header-bg); border-top: 4px solid var(--gold-bright);
+        border-radius: 12px; box-shadow: var(--shadow);
+        padding: 18px 20px 16px; margin-top: 28px;
+      }
+      .ps-strip h2 {
+        color: var(--header-ink); font-size: 24px; margin: 0 0 4px;
+      }
+      .ps-strip .ps-sub { color: var(--header-ink-2); font-size: 14px; margin: 0 0 14px; }
+      .ps-list { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; list-style: none; margin: 0; padding: 0; }
+      .ps-item {
+        background: rgba(242,236,220,.07); border: 1px solid rgba(242,236,220,.18);
+        border-radius: 10px; padding: 12px 12px 10px; text-align: left;
+      }
+      .ps-item.first { background: var(--gold-soft); border-color: var(--gold-bright); color: var(--ink); }
+      .ps-rank { font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .85; display: block; margin-bottom: 2px; }
+      .ps-item.first .ps-rank { color: var(--gold); }
+      .ps-name { font-weight: 700; font-size: 15.5px; line-height: 1.2; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .ps-score { font-family: "JetBrains Mono", monospace; font-size: 30px; font-weight: 700; line-height: 1.1; display: block; margin-top: 4px; color: var(--gold-bright); }
+      .ps-item.first .ps-score { color: var(--gold); }
+      .ps-mmr { font-family: "JetBrains Mono", monospace; font-size: 12.5px; opacity: .85; display: block; margin-top: 1px; }
+
+      /* Large Performance Score on player cards */
+      .card-score {
+        display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px;
+        background: var(--gold-soft); border: 1px solid var(--line);
+        border-radius: 10px; padding: 12px 14px; margin-top: 14px;
+      }
+      .card-score .ps-label {
+        font-family: "Barlow Condensed", sans-serif; font-size: 16px; font-weight: 700;
+        letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2);
+      }
+      .card-score .ps-big {
+        font-family: "JetBrains Mono", monospace; font-size: 38px; font-weight: 700;
+        line-height: 1; color: var(--gold);
+      }
+      .card-score .ps-mmr-small {
+        font-family: "JetBrains Mono", monospace; font-size: 14px; font-weight: 700; color: var(--ink-2);
+      }
+      .mmr-value { font-family: "JetBrains Mono", monospace; font-size: 16px; font-weight: 700; }
+
+      /* Subscore bars */
+      .sub-cell { min-width: 86px; }
+      .sub-value { font-family: "JetBrains Mono", monospace; font-size: 14.5px; font-weight: 700; }
+      .sub-bar { height: 5px; border-radius: 3px; background: var(--bg-2); margin-top: 5px; overflow: hidden; }
+      .sub-fill { height: 100%; border-radius: 3px; background: var(--gold-bright); }
+      .sub-fill.hi { background: var(--teal); }
+      .sub-fill.lo { background: var(--red); }
+      .legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 12px; font-size: 13.5px; color: var(--ink-3); }
+      .legend .sw { display: inline-block; width: 22px; height: 6px; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
+      .legend .sw.hi { background: var(--teal); } .legend .sw.mid { background: var(--gold-bright); } .legend .sw.lo { background: var(--red); }
+
+      /* ---------- Player cards ---------- */
+      .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .card {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 12px; box-shadow: var(--shadow); overflow: hidden;
+        display: flex; flex-direction: column;
+      }
+      .card.wide { grid-column: 1 / -1; }
+      .card-top { padding: 18px 20px 0; }
+      .card-id { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+      .card h3 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 26px; font-weight: 700; margin: 0; line-height: 1.05;
+      }
+      .card-id-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+      .role-tag {
+        font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+        color: var(--gold); background: var(--gold-soft);
+        border-radius: 999px; padding: 4px 11px; white-space: nowrap;
+      }
+      .mpr-tag {
+        font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700;
+        color: var(--header-ink); background: var(--header-bg);
+        border-radius: 999px; padding: 4px 12px; white-space: nowrap;
+      }
+      .mpr-tag b { color: var(--gold-bright); }
+      .card-stats {
+        display: flex; flex-wrap: wrap; gap: 6px 18px;
+        padding: 10px 0 14px; border-bottom: 1px solid var(--line); margin-top: 10px;
+      }
+      .card-stats .cs { font-size: 13.5px; color: var(--ink-3); }
+      .card-stats .cs b { font-family: "JetBrains Mono", monospace; color: var(--ink); font-size: 14.5px; font-weight: 700; }
+      .card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; flex: 1; }
+      .col { padding: 16px 20px 18px; }
+      .col + .col { border-left: 1px solid var(--line); }
+      .col h4 {
+        font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+        margin: 0 0 8px; display: flex; align-items: center; gap: 7px;
+      }
+      .col.good h4 { color: var(--teal); }
+      .col.fix h4 { color: var(--red); }
+      .col h4 .mark {
+        width: 18px; height: 18px; border-radius: 50%; flex: none;
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 12px; font-weight: 700; line-height: 1;
+      }
+      .col.good .mark { background: var(--teal-soft); color: var(--teal); }
+      .col.fix .mark { background: var(--red-soft); color: var(--red); }
+      .col p { margin: 0; font-size: 15px; color: var(--ink-2); }
+      .col p strong { color: var(--ink); font-weight: 700; }
+      .col ol.top-list { margin: 0; padding-left: 20px; font-size: 15px; color: var(--ink-2); }
+      .col ol.top-list li { margin-bottom: 9px; padding-left: 2px; }
+      .col ol.top-list li:last-child { margin-bottom: 0; }
+      .col ol.top-list li::marker { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink); }
+      .col .card-note { margin-top: 12px; font-size: 13.5px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 10px; }
+      .card-extra {
+        border-top: 1px solid var(--line); background: var(--surface-2);
+        padding: 12px 20px 14px;
+        display: flex; flex-wrap: wrap; gap: 5px 22px;
+      }
+      .card-extra .xs { font-size: 13px; color: var(--ink-3); }
+      .card-extra .xs b { font-family: "JetBrains Mono", monospace; color: var(--ink); font-size: 13.5px; font-weight: 700; }
+
+      /* ---------- Radar charts (player cards) ---------- */
+      .radar-section {
+        padding: 16px 20px 14px;
+        border-top: 1px solid var(--line);
+        background: var(--surface-2);
+      }
+      .radar-head {
+        display: flex; align-items: baseline; justify-content: space-between;
+        gap: 12px; flex-wrap: wrap; margin-bottom: 6px;
+      }
+      .radar-title {
+        font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+        color: var(--ink-2); margin: 0;
+      }
+      .radar-legend {
+        display: flex; flex-wrap: wrap; gap: 6px 16px;
+        list-style: none; margin: 0; padding: 0;
+        font-size: 13px; font-weight: 600; color: var(--ink-2);
+      }
+      .radar-legend li { display: inline-flex; align-items: center; gap: 7px; }
+      .radar-legend .sw-player {
+        width: 22px; height: 10px; border-radius: 3px; flex: none;
+        background: color-mix(in srgb, var(--gold-bright) 38%, transparent);
+        border: 2px solid var(--gold);
+      }
+      .radar-legend .sw-group {
+        width: 22px; height: 0; flex: none;
+        border-top: 2px dashed var(--ink-3);
+      }
+      .radar-wrap { width: 100%; max-width: 380px; margin: 0 auto; }
+      .radar-wrap svg { display: block; width: 100%; height: auto; }
+      .radar-note { font-size: 13px; color: var(--ink-3); margin: 6px 0 0; line-height: 1.45; }
+      .radar-grid-ring { fill: none; stroke: var(--line); stroke-width: 1; }
+      .radar-grid-ring.outer { stroke: var(--line-strong); }
+      .radar-axis-line { stroke: var(--line); stroke-width: 1; }
+      .radar-group-poly { fill: var(--ink-3); fill-opacity: .06; stroke: var(--ink-3); stroke-width: 1.6; stroke-dasharray: 5 3; stroke-linejoin: round; }
+      .radar-player-poly { fill: var(--gold-bright); fill-opacity: .30; stroke: var(--gold); stroke-width: 2.2; stroke-linejoin: round; }
+      .radar-player-dot { fill: var(--gold); stroke: var(--surface); stroke-width: 1.6; }
+      .radar-dot-above { fill: var(--teal); stroke: var(--surface); stroke-width: 1.6; }
+      .radar-dot-below { fill: var(--red); stroke: var(--surface); stroke-width: 1.6; }
+      .radar-dot-legend { font-size: 13px; color: var(--ink-3); margin: 4px 0 0; line-height: 1.45; }
+      .radar-scale { fill: var(--ink-3); font-family: "JetBrains Mono", monospace; font-size: 9px; }
+      .radar-label { fill: var(--ink-2); font-family: "Barlow", sans-serif; font-size: 11.5px; font-weight: 600; }
+      .radar-val { fill: var(--gold); font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 700; }
+      @media (max-width: 820px) {
+        .radar-wrap { max-width: 340px; }
+      }
+
+      /* ---------- Performance History charts ---------- */
+      .history-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+      .chart-card {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 12px; box-shadow: var(--shadow); padding: 18px 20px 16px;
+      }
+      .chart-card h3 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 20px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: .02em; margin: 0 0 2px;
+      }
+      .chart-card .chart-sub { color: var(--ink-3); font-size: 13.5px; margin: 0 0 10px; }
+      .chart-wrap { width: 100%; }
+      .chart-wrap svg { display: block; width: 100%; height: auto; }
+      .chart-grid { stroke: var(--line); stroke-width: 1; }
+      .chart-axis { fill: var(--ink-3); font-family: "JetBrains Mono", monospace; font-size: 11px; }
+      .chart-axis-x { text-anchor: middle; }
+      .chart-axis-y { text-anchor: end; }
+      .chart-line { fill: none; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+      .chart-dot { stroke: var(--surface); stroke-width: 2; }
+      .chart-val { font-family: "JetBrains Mono", monospace; font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+      .line-c1 { stroke: var(--chart-1); } .dot-c1 { fill: var(--chart-1); } .val-c1 { fill: var(--chart-1); }
+      .line-c2 { stroke: var(--chart-2); } .dot-c2 { fill: var(--chart-2); } .val-c2 { fill: var(--chart-2); }
+      .line-c3 { stroke: var(--chart-3); } .dot-c3 { fill: var(--chart-3); } .val-c3 { fill: var(--chart-3); }
+      .line-c4 { stroke: var(--chart-4); } .dot-c4 { fill: var(--chart-4); } .val-c4 { fill: var(--chart-4); }
+      .line-c5 { stroke: var(--chart-5); } .dot-c5 { fill: var(--chart-5); } .val-c5 { fill: var(--chart-5); }
+      .line-c6 { stroke: var(--chart-6); } .dot-c6 { fill: var(--chart-6); } .val-c6 { fill: var(--chart-6); }
+      .chart-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--line); list-style: none; padding-left: 0; }
+      .chart-legend li { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+      .chart-legend .swatch { width: 22px; height: 4px; border-radius: 2px; flex: none; }
+      .sw-c1 { background: var(--chart-1); } .sw-c2 { background: var(--chart-2); }
+      .sw-c3 { background: var(--chart-3); } .sw-c4 { background: var(--chart-4); }
+      .sw-c5 { background: var(--chart-5); }
+      .sw-c6 { background: var(--chart-6); }
+      .chart-legend .lg-val { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink); }
+      .history-note { color: var(--ink-3); font-size: 14px; margin: 14px 0 0; max-width: 760px; }
+
+      /* ---------- Methodology ---------- */
+      .method {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 12px; box-shadow: var(--shadow); padding: 22px 24px 10px;
+      }
+      .method h3 {
+        font-family: "Barlow Condensed", sans-serif; font-size: 19px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: .03em; margin: 18px 0 6px;
+      }
+      .method h3:first-child { margin-top: 0; }
+      .method p, .method li { font-size: 15px; color: var(--ink-2); }
+      .method p { margin: 0 0 10px; max-width: 880px; }
+      .method ul { margin: 0 0 12px; padding-left: 20px; max-width: 880px; }
+      .method li { margin-bottom: 7px; }
+      .method strong { color: var(--ink); }
+      .method .formula {
+        font-family: "JetBrains Mono", monospace; font-size: 14px; color: var(--ink);
+        background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+        padding: 11px 14px; margin: 0 0 12px; overflow-x: auto; white-space: nowrap;
+      }
+
+      /* ---------- Footer ---------- */
+      footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 18px; }
+      footer p { color: var(--ink-3); font-size: 13.5px; margin: 0 0 8px; max-width: 880px; }
+      footer p:last-child { margin-bottom: 0; }
+      footer a { color: var(--gold); font-weight: 600; text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+
+      /* ---------- Mobile ---------- */
+      @media (max-width: 820px) {
+        .ps-list { grid-template-columns: 1fr; }
+        .ps-item { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+        .ps-score { font-size: 26px; margin-top: 0; margin-left: auto; }
+        .ps-mmr { width: 100%; }
+        .highlights { grid-template-columns: 1fr 1fr; }
+        .cards { grid-template-columns: 1fr; }
+        .card-body { grid-template-columns: 1fr; }
+        .col + .col { border-left: 0; border-top: 1px solid var(--line); }
+
+        /* Tables become stacked rows */
+        .table-card { background: transparent; border: 0; box-shadow: none; overflow: visible; }
+        .stack-table, .stack-table tbody, .stack-table tr, .stack-table td { display: block; width: 100%; }
+        .stack-table thead { display: none; }
+        .stack-table tbody tr {
+          background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+          box-shadow: var(--shadow); padding: 14px 16px 8px; margin-bottom: 12px;
+        }
+        .stack-table tbody tr:hover { background: var(--surface); }
+        .stack-table tbody td {
+          border-bottom: 0; padding: 5px 0; text-align: left;
+          display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+        }
+        .stack-table tbody td::before {
+          content: attr(data-label);
+          font-family: "Barlow Condensed", sans-serif; font-size: 13.5px; font-weight: 600;
+          letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); flex: none;
+        }
+        .stack-table td.player-cell { display: block; padding: 0 0 10px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
+        .stack-table td.player-cell::before { content: none; }
+        .sub-cell, .mpr-cell { min-width: 0; }
+        .sub-cell .sub-wrap, .mpr-cell .mpr-wrap { text-align: right; flex: 1; max-width: 55%; }
+        .method { padding: 18px 18px 6px; }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        tbody tr, .card, .hl { transition: background-color .15s ease; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="masthead-inner">
+        <p class="mode-line"><span>League of Legends</span><span class="dot">•</span><span>ARAM: Mayhem</span><span class="dot">•</span><span>NA Server</span></p>
+        <h1>ARAM Mayhem — <span class="accent">Team Assessment</span></h1>
+        <p class="lede">Six players, each scored on <strong>their own last 50 ARAM Mayhem games</strong> on PlayARAM — every game graded against players in the same role archetype, rolled into one <strong>Performance Score (Mayhem Performance Rating)</strong> and an MMR-style number per player.</p>
+        <div class="freshness">
+          <span class="chip"><span class="pulse"></span>Stats as of <b>Nov 2, 2026</b></span>
+          <span class="chip">Source: <b>PlayARAM.gg</b></span>
+          <span class="chip"><b>300</b> player-games · <b>50</b> games per player</span>
+          <span class="chip">Data refreshes <b>automatically, daily</b></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <section class="ps-strip" aria-labelledby="ps-strip-h">
+        <h2 id="ps-strip-h">Performance Scores</h2>
+        <p class="ps-sub">Assigned Performance Score per player — each player’s last 50 ARAM Mayhem games, 0–100 scale. Ranked highest to lowest.</p>
+        <ol class="ps-list">
+          <li class="ps-item first"><span class="ps-rank">1st</span><span class="ps-name">Vincent Chan</span><span class="ps-score">57.2</span><span class="ps-mmr">MMR-style 1600</span></li>
+          <li class="ps-item"><span class="ps-rank">2nd</span><span class="ps-name">CreamiNataella</span><span class="ps-score">53.0</span><span class="ps-mmr">MMR-style 1542</span></li>
+          <li class="ps-item"><span class="ps-rank">3rd</span><span class="ps-name">I3i3oy</span><span class="ps-score">51.8</span><span class="ps-mmr">MMR-style 1526</span></li>
+          <li class="ps-item"><span class="ps-rank">4th</span><span class="ps-name">pikabUwU</span><span class="ps-score">49.1</span><span class="ps-mmr">MMR-style 1487</span></li>
+          <li class="ps-item"><span class="ps-rank">5th</span><span class="ps-name">Ohwutahel</span><span class="ps-score">47.0</span><span class="ps-mmr">MMR-style 1457</span></li>
+          <li class="ps-item"><span class="ps-rank">6th</span><span class="ps-name">Mashbrains</span><span class="ps-score">37.5</span><span class="ps-mmr">MMR-style 1325</span></li>
+        </ol>
+      </section>
+
+      <div class="highlights" aria-label="Group highlights">
+        <div class="hl">
+          <p class="hl-label">Top rated · Performance Score</p>
+          <p class="hl-value">57.2</p>
+          <p class="hl-who">Vincent Chan · MMR-style 1600</p>
+        </div>
+        <div class="hl">
+          <p class="hl-label">Highest damage / min</p>
+          <p class="hl-value">2,427</p>
+          <p class="hl-who">Vincent Chan · 21.1% of group damage</p>
+        </div>
+        <div class="hl">
+          <p class="hl-label">Best KDA</p>
+          <p class="hl-value">4.48</p>
+          <p class="hl-who">CreamiNataella</p>
+        </div>
+        <div class="hl">
+          <p class="hl-label">Most skillshots dodged / min</p>
+          <p class="hl-value">5.41</p>
+          <p class="hl-who">Ohwutahel · while frontlining</p>
+        </div>
+      </div>
+
+      <section aria-labelledby="summary-h">
+        <div class="section-head">
+          <h2 id="summary-h">Summary — Last 50 Games Per Player</h2>
+          <p class="section-note">Performance Score is the overall assigned score per player (0–100), based on each player’s last 50 ARAM Mayhem games. On desktop, tap a column heading to sort.</p>
+        </div>
+        <div class="table-card">
+          <table class="stack-table" id="summary-table">
+            <thead>
+              <tr>
+                <th scope="col"><button type="button" data-key="player" data-type="text">Player <span class="sort-arrow" aria-hidden="true">▲</span></button></th>
+                <th scope="col" class="ps-head" aria-sort="descending"><button type="button" data-key="mpr" data-type="num">Performance Score <span class="sort-arrow" aria-hidden="true">▼</span></button></th>
+                <th scope="col"><button type="button" data-key="mmr" data-type="num">MMR-Style <span class="sort-arrow" aria-hidden="true">▲</span></button></th>
+                <th scope="col"><button type="button" data-key="games" data-type="num">Games <span class="sort-arrow" aria-hidden="true">▲</span></button></th>
+                <th scope="col"><button type="button" data-key="wins" data-type="num">Record <span class="sort-arrow" aria-hidden="true">▲</span></button></th>
+                <th scope="col"><button type="button" data-key="kda" data-type="num">KDA <span class="sort-arrow" aria-hidden="true">▲</span></button></th>
+                <th scope="col"><button type="button" data-key="dpm" data-type="num">Dmg / Min <span class="sort-arrow" aria-hidden="true">▲</span></button></th>
+                <th scope="col"><button type="button" data-key="dmgShare" data-type="num">Share of Group Damage <span class="sort-arrow" aria-hidden="true">▲</span></button></th>
+                <th scope="col"><button type="button" data-key="kp" data-type="num">Kill Part. <span class="sort-arrow" aria-hidden="true">▲</span></button></th>
+                <th scope="col"><button type="button" data-key="deaths" data-type="num">Deaths / Game <span class="sort-arrow" aria-hidden="true">▲</span></button></th>
+              </tr>
+            </thead>
+            <tbody id="summary-body"><!-- rows rendered by script --></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="subs-h">
+        <div class="section-head">
+          <h2 id="subs-h">Criteria Subscores</h2>
+          <p class="section-note">Each criterion is graded 0–100 as a percentile within the player's role archetype across the 300 player-games in this dataset — 50 is an average game for that archetype, so tanks and supports aren't judged on carry stats.</p>
+        </div>
+        <div class="table-card">
+          <table class="stack-table" id="subscore-table">
+            <thead>
+              <tr>
+                <th scope="col">Player</th>
+                <th scope="col">Output</th>
+                <th scope="col">KDA Efficiency</th>
+                <th scope="col">Teamplay</th>
+                <th scope="col">Death Quality</th>
+                <th scope="col">Conversion</th>
+                <th scope="col">Augments</th>
+                <th scope="col">Mechanics</th>
+              </tr>
+            </thead>
+            <tbody id="subscore-body"><!-- rows rendered by script --></tbody>
+          </table>
+        </div>
+        <div class="legend" aria-hidden="true">
+          <span><span class="sw hi"></span>55+ — a real strength</span>
+          <span><span class="sw mid"></span>45–54 — around archetype average</span>
+          <span><span class="sw lo"></span>Below 45 — a drag on the rating</span>
+        </div>
+      </section>
+
+      <section aria-labelledby="history-h">
+        <div class="section-head">
+          <h2 id="history-h">Performance History</h2>
+          <p class="section-note">Daily history for each player — Performance Score and MMR-style only. Each refresh adds a new point.</p>
+        </div>
+        <div class="history-grid">
+          <div class="chart-card">
+            <h3>Performance Score — daily history</h3>
+            <p class="chart-sub">0–100 scale · one point per player per day</p>
+            <div class="chart-wrap" id="chart-mpr" role="img" aria-label="Line chart of daily Performance Score history for each player"></div>
+            <ul class="chart-legend" id="legend-mpr" aria-label="Performance Score legend"></ul>
+          </div>
+          <div class="chart-card">
+            <h3>MMR-style — daily history</h3>
+            <p class="chart-sub">MMR-style rating · one point per player per day</p>
+            <div class="chart-wrap" id="chart-mmr" role="img" aria-label="Line chart of daily MMR-style history for each player"></div>
+            <ul class="chart-legend" id="legend-mmr" aria-label="MMR-style legend"></ul>
+          </div>
+        </div>
+        <p class="history-note">History is tracked under the per-player last-50 definition — each day's refresh adds a point, so the lines grow over time.</p>
+      </section>
+
+      <section aria-labelledby="players-h">
+        <div class="section-head">
+          <h2 id="players-h">Player by Player</h2>
+          <p class="section-note">What they do well — and what to fix, over each player’s last 50 games</p>
+        </div>
+        <div class="cards" id="player-cards"><!-- cards rendered by script --></div>
+      </section>
+
+      <section aria-labelledby="method-h">
+        <div class="section-head">
+          <h2 id="method-h">How the Rating Works</h2>
+        </div>
+        <div class="method">
+          <p>Based on <strong>each player’s last 50 ARAM Mayhem games on PlayARAM</strong> — 300 player-games across 151 unique games, with remakes under 5 minutes excluded. There is no together-games filter: every player is scored on their own last 50 games, so each player has exactly 50 games. Every game is graded 0–100 per criterion against players on the same <strong>role archetype (Damage / Frontline / Support)</strong>, with percentiles computed across the <strong>300 player-games</strong> in the dataset, so tanks and supports are not judged on carry stats.</p>
+          <h3>The seven criteria</h3>
+          <ul>
+            <li><strong>Output</strong> — damage per minute. For Frontline: damage taken + damage dealt. For Support: assists + damage.</li>
+            <li><strong>KDA efficiency</strong> — kills, deaths and assists weighed against the archetype's expected line.</li>
+            <li><strong>Teamplay</strong> — kill participation: (kills + assists) ÷ team kills.</li>
+            <li><strong>Death quality</strong> — deaths per minute (Frontline also credited for damage soaked per death), blended with late-game death timing taken from each match's timeline.</li>
+            <li><strong>Conversion</strong> — turrets and inhibitors the player is credited with in the match timeline: turning fights into structures.</li>
+            <li><strong>Augments</strong> — how the augments that player drafted performed across the whole group's 300 player-games in this dataset (win rate + KDA, augments seen at least 3 times).</li>
+            <li><strong>Mechanics</strong> — skillshots dodged and snowball hits per minute, both shown on PlayARAM summary cards.</li>
+          </ul>
+          <p id="radar-method-text">Each player card's radar chart plots that player's seven criteria subscores against the group average across the same seven criteria, so strengths and gaps are visible at a glance. Radar scale: zoomed — the center is 30 and the outer ring is 65.0, the highest subscore in the group (Vincent Chan's Teamplay), so all six radars share one scale and the differences are easier to see.</p>
+          <h3>From grades to a rating</h3>
+          <p>The overall assigned score is the <strong>Performance Score (Mayhem Performance Rating)</strong> — the number shown in the ranking strip, the summary table, and at the top of each player card.</p>
+          <p class="formula">Performance Score (Mayhem Performance Rating) = 55% mean game grade + 20% median grade + 10% floor (25th percentile) grade + 15% win rate</p>
+          <p class="formula">MMR-style = 800 + Performance Score × 14 &nbsp;—&nbsp; 1500 is a roughly average performance</p>
+          <p>The median and floor terms are the consistency check: a player whose worst games crater scores lower than one with the same average and a higher floor.</p>
+          <h3>What isn't measured</h3>
+          <p>PlayARAM does not publish healing, shielding, crowd-control score or per-player objective damage, so support utility is approximated by assists, participation and damage taken — enchanter-heavy players (notably pikabUwU) are likely understated. Ratings cluster in the 40s–50s because every criterion is a percentile grade against the same archetype pool.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p>Share of group damage is each player's damage dealt to champions across the 300 player-games in this dataset as a percentage of the six players' combined total. Kill participation (KP) = (kills + assists) ÷ team kills.</p>
+        <p>Stats pulled from <a href="https://playaram.gg" target="_blank" rel="noopener">PlayARAM.gg</a> profiles on Nov 2, 2026. Data refreshes automatically, daily — this same link will show the new numbers.</p>
+      </footer>
+    </div>
+
+    <script>
+      var SUB_DEFS = [
+        { key: "output", label: "Output" },
+        { key: "kdaEff", label: "KDA Efficiency" },
+        { key: "teamplay", label: "Teamplay" },
+        { key: "death", label: "Death Quality" },
+        { key: "conversion", label: "Conversion" },
+        { key: "augments", label: "Augments" },
+        { key: "mechanics", label: "Mechanics" }
+      ];
+
+      var PLAYERS = [
+        {
+          name: "Vincent Chan", tag: "", role: "Second Carry",
+          mpr: 57.2, mmr: 1600, games: 50, wins: 28, losses: 22, kda: 4.03, dpm: 2427, dmgShare: 21.1, kp: 74.9, deaths: 9.50,
+          subs: { output: 64.3, kdaEff: 59.2, teamplay: 65.0, death: 47.2, conversion: 53.4, augments: 56.8, mechanics: 46.6 },
+          avgDmg: 43348, avgTaken: 33510, dodges: 3.05, objectives: 0.80, lateDeaths: 28.6, closeGrade: 57.8, lossGrade: 54.2,
+          consMean: 58.3, consMedian: 58.7, consFloor: 49.2,
+          goodList: ["Best teamplay (65.0) and best output (64.3) in the group, with 74.9% kill participation.", "Most consistent again: best average grade in losses (54.2) and the group's highest floor (49.2).", "Senna posts a 5.20 KDA across 4 games; Smolder a 6.17 in 2."],
+          fixList: ["Death quality (47.2) at 9.50 deaths per game.", "Brand is 1-3, and Shaco is 2-1 but with only a 2.85 KDA.", "Mechanics (46.6) lags his other scores."]
+        },
+        {
+          name: "CreamiNataella", tag: "", role: "Support Anchor",
+          mpr: 53.0, mmr: 1542, games: 50, wins: 24, losses: 26, kda: 4.48, dpm: 1826, dmgShare: 16.2, kp: 73.6, deaths: 8.16,
+          subs: { output: 51.2, kdaEff: 60.2, teamplay: 57.2, death: 57.0, conversion: 46.3, augments: 59.9, mechanics: 48.6 },
+          avgDmg: 33312, avgTaken: 34730, dodges: 3.44, objectives: 0.44, lateDeaths: 26.5, closeGrade: 55.1, lossGrade: 47.8,
+          consMean: 54.7, consMedian: 57.8, consFloor: 41.6,
+          goodList: ["Best KDA efficiency in the group now (60.2), best raw KDA (4.48), and best death quality (57.0).", "Strong in close games (55.1 average grade).", "Braum is 2-1 (4.77 KDA) and Smolder 2-0."],
+          fixList: ["Her record slid to 24-26 \u2014 the stats aren't converting to wins.", "Lowest conversion in the group (46.3): only 0.44 objectives credited per game.", "Ziggs is 0-2 and Miss Fortune 1-2 in this window."]
+        },
+        {
+          name: "I3i3oy", tag: "Tim", role: "Main Carry",
+          mpr: 51.8, mmr: 1526, games: 50, wins: 26, losses: 24, kda: 3.64, dpm: 2407, dmgShare: 21.5, kp: 68.0, deaths: 9.38,
+          subs: { output: 59.8, kdaEff: 51.4, teamplay: 47.6, death: 50.6, conversion: 57.4, augments: 56.7, mechanics: 46.1 },
+          avgDmg: 44248, avgTaken: 38610, dodges: 3.29, objectives: 1.08, lateDeaths: 28.2, closeGrade: 53.0, lossGrade: 43.6,
+          consMean: 53.9, consMedian: 53.2, consFloor: 37.9,
+          goodList: ["Best conversion in the group (57.4): 1.08 turrets/inhibitors credited per game.", "Output is second-best (59.8) with 21.5% of group damage.", "Varus is 2-1 with a 5.68 KDA and Ahri posts a 5.00."],
+          fixList: ["A rough session: record down to 26-24 and Vayne fell to 5-1 with a 3.20 KDA.", "Teamplay (47.6) and 68.0% kill participation \u2014 lowest of the original five.", "Still drops in losses: 43.6 average grade vs 53.0 in close games."]
+        },
+        {
+          name: "pikabUwU", tag: "", role: "Utility Mage / Support",
+          mpr: 49.1, mmr: 1487, games: 50, wins: 27, losses: 23, kda: 4.07, dpm: 1548, dmgShare: 13.4, kp: 69.9, deaths: 8.42,
+          subs: { output: 43.8, kdaEff: 54.7, teamplay: 47.3, death: 54.4, conversion: 51.3, augments: 60.8, mechanics: 44.1 },
+          avgDmg: 27540, avgTaken: 29644, dodges: 3.07, objectives: 0.66, lateDeaths: 26.4, closeGrade: 45.9, lossGrade: 39.7,
+          consMean: 49.7, consMedian: 50.3, consFloor: 36.3,
+          goodList: ["Best augment drafting in the group (60.8).", "Hwei is 4-1 with a 5.45 KDA.", "Death quality is strong (54.4): a controlled 8.42 deaths per game."],
+          fixList: ["Low output (43.8): 1,548 damage per minute.", "Senna is 0-2 (3.43 KDA), and Ahri is 1-2 despite a 5.78 KDA.", "Least clutch: 45.9 average grade in close games and 39.7 in losses."],
+          note: "Note: PlayARAM does not publish healing/shielding, so enchanter value is likely understated by this score."
+        },
+        {
+          name: "Ohwutahel", tag: "", role: "Frontline",
+          mpr: 47.0, mmr: 1457, games: 50, wins: 24, losses: 26, kda: 2.98, dpm: 1865, dmgShare: 16.3, kp: 72.6, deaths: 11.56,
+          subs: { output: 54.9, kdaEff: 35.5, teamplay: 53.6, death: 39.8, conversion: 51.4, augments: 56.4, mechanics: 56.4 },
+          avgDmg: 33433, avgTaken: 53537, dodges: 5.41, objectives: 0.68, lateDeaths: 25.0, closeGrade: 49.7, lossGrade: 40.1,
+          consMean: 48.4, consMedian: 47.8, consFloor: 36.0,
+          goodList: ["Mechanics near the top (56.4) with a group-best 5.41 skillshots dodged per minute.", "Taric is 3-0 (6.22 KDA) and Zac 3-0.", "Soaks everything: 53,537 average damage taken, group-high, and his teamplay rose to 53.6."],
+          fixList: ["Lowest KDA efficiency in the group (35.5) and a group-high 11.56 deaths per game.", "Lowest death quality (39.8).", "Record is 24-26, with Zyra and Trundle both 1-2."]
+        },
+        {
+          name: "Mashbrains", tag: "", role: "Melee Bruiser",
+          mpr: 37.5, mmr: 1325, games: 50, wins: 21, losses: 29, kda: 2.98, dpm: 1302, dmgShare: 11.4, kp: 58.5, deaths: 8.90,
+          subs: { output: 26.0, kdaEff: 39.1, teamplay: 29.4, death: 50.9, conversion: 51.2, augments: 51.7, mechanics: 58.2 },
+          avgDmg: 23448, avgTaken: 33093, dodges: 3.58, objectives: 0.72, lateDeaths: 28.3, closeGrade: 40.1, lossGrade: 37.2,
+          consMean: 38.3, consMedian: 37.3, consFloor: 26.4,
+          goodList: ["Best mechanics in the group (58.2): dodging and snowball accuracy are genuinely strong.", "Death quality is mid-pack (50.9): only 8.90 deaths per game despite the record.", "Garen is a real pick: 4-2 with a 4.02 KDA across 6 games."],
+          fixList: ["Lowest output in the group (26.0): 1,302 damage per minute and 11.4% of group damage.", "Lowest teamplay (29.4): 58.5% kill participation, far below the group's ~70%.", "Worst record in the group (21-29) and the worst grades in close games (40.1) and losses (37.2); Master Yi is 1-3."]
+        }
+      ];
+
+      function fmt(n) { return n.toLocaleString("en-US"); }
+      function f1(n) { return n.toFixed(1); }
+      function f2(n) { return n.toFixed(2); }
+
+      var bestMpr = Math.max.apply(null, PLAYERS.map(function (p) { return p.mpr; }));
+      var bestKda = Math.max.apply(null, PLAYERS.map(function (p) { return p.kda; }));
+      var bestDpm = Math.max.apply(null, PLAYERS.map(function (p) { return p.dpm; }));
+      var bestShare = Math.max.apply(null, PLAYERS.map(function (p) { return p.dmgShare; }));
+      var bestKp = Math.max.apply(null, PLAYERS.map(function (p) { return p.kp; }));
+      var fewestDeaths = Math.min.apply(null, PLAYERS.map(function (p) { return p.deaths; }));
+      var mostDeaths = Math.max.apply(null, PLAYERS.map(function (p) { return p.deaths; }));
+
+      function renderTable(rows) {
+        var body = document.getElementById("summary-body");
+        body.innerHTML = "";
+        rows.forEach(function (p) {
+          var tr = document.createElement("tr");
+
+          var nameTd = document.createElement("td");
+          nameTd.className = "player-cell";
+          nameTd.innerHTML = '<span class="p-name"></span><span class="p-role"></span>';
+          nameTd.querySelector(".p-name").textContent = p.name + (p.tag ? " (" + p.tag + ")" : "");
+          nameTd.querySelector(".p-role").textContent = p.role;
+          tr.appendChild(nameTd);
+
+          var mprTd = document.createElement("td");
+          mprTd.setAttribute("data-label", "Performance Score");
+          mprTd.className = "mpr-cell";
+          mprTd.innerHTML = '<span class="mpr-wrap"><span class="mpr-value' + (p.mpr === bestMpr ? " top" : "") + '">' + f1(p.mpr) + '</span>' +
+            '<span class="mpr-bar" aria-hidden="true"><span class="mpr-fill" style="width:' + Math.round(p.mpr) + '%"></span></span></span>';
+          tr.appendChild(mprTd);
+
+          var mmrTd = document.createElement("td");
+          mmrTd.setAttribute("data-label", "MMR-Style");
+          mmrTd.innerHTML = '<span class="mmr-value">' + fmt(p.mmr) + "</span>";
+          tr.appendChild(mmrTd);
+
+          var gamesTd = document.createElement("td");
+          gamesTd.setAttribute("data-label", "Games");
+          gamesTd.innerHTML = '<span class="num big">' + p.games + '</span>';
+          tr.appendChild(gamesTd);
+
+          var recTd = document.createElement("td");
+          recTd.setAttribute("data-label", "Record");
+          recTd.innerHTML = '<span class="rec"><span class="w">' + p.wins + "W</span>" +
+            '<span class="dash">–</span><span class="l">' + p.losses + "L</span></span>";
+          tr.appendChild(recTd);
+
+          var kdaTd = document.createElement("td");
+          kdaTd.setAttribute("data-label", "KDA");
+          kdaTd.innerHTML = '<span class="num big' + (p.kda === bestKda ? " best" : "") + '">' + f2(p.kda) + "</span>";
+          tr.appendChild(kdaTd);
+
+          var dpmTd = document.createElement("td");
+          dpmTd.setAttribute("data-label", "Dmg / Min");
+          dpmTd.innerHTML = '<span class="num big' + (p.dpm === bestDpm ? " best" : "") + '">' + fmt(p.dpm) + "</span>";
+          tr.appendChild(dpmTd);
+
+          var shareTd = document.createElement("td");
+          shareTd.setAttribute("data-label", "Share of Group Damage");
+          shareTd.innerHTML = '<span class="num big' + (p.dmgShare === bestShare ? " best" : "") + '">' + f1(p.dmgShare) + "%</span>";
+          tr.appendChild(shareTd);
+
+          var kpTd = document.createElement("td");
+          kpTd.setAttribute("data-label", "Kill Part.");
+          kpTd.innerHTML = '<span class="num' + (p.kp === bestKp ? " best" : "") + '">' + f1(p.kp) + "%</span>";
+          tr.appendChild(kpTd);
+
+          var dTd = document.createElement("td");
+          dTd.setAttribute("data-label", "Deaths / Game");
+          var dCls = "num" + (p.deaths === fewestDeaths ? " best" : (p.deaths === mostDeaths ? " worst" : ""));
+          dTd.innerHTML = '<span class="' + dCls + '">' + f2(p.deaths) + "</span>";
+          tr.appendChild(dTd);
+
+          body.appendChild(tr);
+        });
+      }
+
+      function subClass(v) { return v >= 55 ? " hi" : (v < 45 ? " lo" : ""); }
+
+      function renderSubscores() {
+        var body = document.getElementById("subscore-body");
+        PLAYERS.forEach(function (p) {
+          var tr = document.createElement("tr");
+          var nameTd = document.createElement("td");
+          nameTd.className = "player-cell";
+          nameTd.innerHTML = '<span class="p-name"></span><span class="p-role"></span>';
+          nameTd.querySelector(".p-name").textContent = p.name + (p.tag ? " (" + p.tag + ")" : "");
+          nameTd.querySelector(".p-role").textContent = "Performance Score " + f1(p.mpr);
+          tr.appendChild(nameTd);
+          SUB_DEFS.forEach(function (def) {
+            var v = p.subs[def.key];
+            var td = document.createElement("td");
+            td.setAttribute("data-label", def.label);
+            td.className = "sub-cell";
+            td.innerHTML = '<span class="sub-wrap"><span class="sub-value">' + f1(v) + '</span>' +
+              '<span class="sub-bar" aria-hidden="true"><span class="sub-fill' + subClass(v) + '" style="width:' + Math.round(v) + '%"></span></span></span>';
+            tr.appendChild(td);
+          });
+          body.appendChild(tr);
+        });
+      }
+
+      var GROUP_AVG = {};
+      SUB_DEFS.forEach(function (def) {
+        var sum = 0;
+        PLAYERS.forEach(function (p) { sum += p.subs[def.key]; });
+        GROUP_AVG[def.key] = Math.round((sum / PLAYERS.length) * 10) / 10;
+      });
+
+      // Zoomed shared radar scale: center = 30 (fixed floor), outer ring =
+      // highest subscore among ALL players, re-derived from the data on
+      // every refresh so all six radars share one zoomed scale.
+      var RADAR_MIN = 30;
+      var RADAR_MAX = -Infinity;
+      var RADAR_MAX_PLAYER = null;
+      var RADAR_MAX_DEF = null;
+      PLAYERS.forEach(function (p) {
+        SUB_DEFS.forEach(function (def) {
+          var v = p.subs[def.key];
+          if (typeof v === "number" && v > RADAR_MAX) { RADAR_MAX = v; RADAR_MAX_PLAYER = p; RADAR_MAX_DEF = def; }
+        });
+      });
+      if (!isFinite(RADAR_MAX) || RADAR_MAX <= RADAR_MIN) { RADAR_MAX = 100; RADAR_MAX_PLAYER = PLAYERS[0]; RADAR_MAX_DEF = SUB_DEFS[0]; }
+      var RADAR_SCALE_MAX = RADAR_MAX;
+      // Keep the methodology radar sentence in sync with the data-derived scale.
+      (function () {
+        var el = document.getElementById("radar-method-text");
+        if (el && RADAR_MAX_PLAYER && RADAR_MAX_DEF) {
+          el.textContent = "Each player card's radar chart plots that player's seven criteria subscores against the group average across the same seven criteria, so strengths and gaps are visible at a glance. Radar scale: zoomed \u2014 the center is " + RADAR_MIN + " and the outer ring is " + f1(RADAR_MAX) + ", the highest subscore in the group (" + RADAR_MAX_PLAYER.name + "'s " + RADAR_MAX_DEF.label + "), so all six radars share one scale and the differences are easier to see.";
+        }
+      })();
+
+      function buildRadarSVG(p) {
+        var W = 360, H = 316, cx = 180, cy = 158, R = 88;
+        var scaleMin = RADAR_MIN;
+        var scaleMax = RADAR_MAX;
+        function pt(value, i) {
+          var ang = (-90 + i * 360 / SUB_DEFS.length) * Math.PI / 180;
+          var frac = (value - scaleMin) / (scaleMax - scaleMin);
+          if (frac < 0) frac = 0;
+          if (frac > 1) frac = 1;
+          var r = R * frac;
+          return [cx + r * Math.cos(ang), cy + r * Math.sin(ang)];
+        }
+        function ringPts(fraction) {
+          var level = scaleMin + (scaleMax - scaleMin) * fraction;
+          var pts = [];
+          for (var i = 0; i < SUB_DEFS.length; i++) {
+            var q = pt(level, i);
+            pts.push(q[0].toFixed(1) + "," + q[1].toFixed(1));
+          }
+          return pts.join(" ");
+        }
+        function polyPts(source) {
+          var pts = [];
+          SUB_DEFS.forEach(function (def, i) {
+            var q = pt(source[def.key], i);
+            pts.push(q[0].toFixed(1) + "," + q[1].toFixed(1));
+          });
+          return pts.join(" ");
+        }
+        var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+        // Grid rings at 25% / 50% / 75% / 100% of the zoomed range (30 to max)
+        [0.25, 0.5, 0.75, 1].forEach(function (fraction) {
+          svg += '<polygon class="radar-grid-ring' + (fraction === 1 ? ' outer' : '') + '" points="' + ringPts(fraction) + '"/>';
+        });
+        // Scale labels along the top axis — true values at each ring
+        [0.25, 0.5, 0.75, 1].forEach(function (fraction) {
+          var level = scaleMin + (scaleMax - scaleMin) * fraction;
+          var q = pt(level, 0);
+          svg += '<text class="radar-scale" x="' + (q[0] + 4).toFixed(1) + '" y="' + (q[1] + 3).toFixed(1) + '">' + Math.round(level) + '</text>';
+        });
+        // Axis lines out to the outer ring (RADAR_MAX)
+        SUB_DEFS.forEach(function (def, i) {
+          var q = pt(scaleMax, i);
+          svg += '<line class="radar-axis-line" x1="' + cx + '" y1="' + cy + '" x2="' + q[0].toFixed(1) + '" y2="' + q[1].toFixed(1) + '"/>';
+        });
+        // Group average (underneath) then player
+        svg += '<polygon class="radar-group-poly" points="' + polyPts(GROUP_AVG) + '"><title>Group average</title></polygon>';
+        svg += '<polygon class="radar-player-poly" points="' + polyPts(p.subs) + '"><title>' + p.name + '</title></polygon>';
+        // Vertex dots + tooltips — green at/above group average, red below
+        SUB_DEFS.forEach(function (def, i) {
+          var q = pt(p.subs[def.key], i);
+          var dotCls = p.subs[def.key] >= GROUP_AVG[def.key] ? "radar-dot-above" : "radar-dot-below";
+          svg += '<circle class="' + dotCls + '" cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="3.5"><title>' + def.label + ': ' + f1(p.subs[def.key]) + ' (group avg ' + f1(GROUP_AVG[def.key]) + ')</title></circle>';
+        });
+        // Axis labels with player values, placed outside the outer ring
+        SUB_DEFS.forEach(function (def, i) {
+          var ang = (-90 + i * 360 / SUB_DEFS.length) * Math.PI / 180;
+          var cos = Math.cos(ang), sin = Math.sin(ang);
+          var lx = cx + (R + 24) * cos;
+          var ly = cy + (R + 24) * sin;
+          var anchor = 'middle';
+          if (cos > 0.35) anchor = 'start';
+          else if (cos < -0.35) anchor = 'end';
+          var labelY = ly - 2;
+          var valY = ly + 12;
+          if (sin < -0.85) { labelY = ly - 12; valY = ly + 2; }
+          if (sin > 0.85) { labelY = ly + 6; valY = ly + 20; }
+          svg += '<text class="radar-label" text-anchor="' + anchor + '" x="' + lx.toFixed(1) + '" y="' + labelY.toFixed(1) + '">' + def.label + '</text>';
+          svg += '<text class="radar-val" text-anchor="' + anchor + '" x="' + lx.toFixed(1) + '" y="' + valY.toFixed(1) + '">' + f1(p.subs[def.key]) + '</text>';
+        });
+        svg += '</svg>';
+        return svg;
+      }
+
+      function renderCards() {
+        var wrap = document.getElementById("player-cards");
+        PLAYERS.forEach(function (p, i) {
+          var card = document.createElement("article");
+          card.className = "card" + (i === PLAYERS.length - 1 && PLAYERS.length % 2 === 1 ? " wide" : "");
+          card.innerHTML =
+            '<div class="card-top">' +
+              '<div class="card-id"><h3></h3><span class="card-id-right">' +
+                '<span class="role-tag"></span></span></div>' +
+              '<div class="card-score"><span class="ps-label">Performance Score:</span><span class="ps-big">' + f1(p.mpr) + '</span><span class="ps-mmr-small">MMR-style ' + fmt(p.mmr) + '</span></div>' +
+              '<div class="card-stats">' +
+                '<span class="cs">Games <b>' + p.games + '</b></span>' +
+                '<span class="cs">Record <b>' + p.wins + "–" + p.losses + '</b></span>' +
+                '<span class="cs">KDA <b>' + f2(p.kda) + '</b></span>' +
+                '<span class="cs">Dmg/min <b>' + fmt(p.dpm) + '</b></span>' +
+                '<span class="cs">Damage share <b>' + f1(p.dmgShare) + '%</b></span>' +
+                '<span class="cs">KP <b>' + f1(p.kp) + '%</b></span>' +
+                '<span class="cs">Deaths <b>' + f2(p.deaths) + '/g</b></span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="radar-section">' +
+              '<div class="radar-head"><p class="radar-title">Criteria radar — vs group average</p>' +
+              '<ul class="radar-legend"><li><span class="sw-player" aria-hidden="true"></span>Player</li><li><span class="sw-group" aria-hidden="true"></span>Group average</li></ul></div>' +
+              '<div class="radar-wrap" role="img"></div>' +
+              '<p class="radar-dot-legend">Green dot: above group average · Red dot: below</p>' +
+              '<p class="radar-note">Radar scale: zoomed — the center is ' + RADAR_MIN + ' and the outer ring is ' + f1(RADAR_MAX) + ', the highest subscore in the group (' + RADAR_MAX_PLAYER.name + '\'s ' + RADAR_MAX_DEF.label + '), so all six radars share one scale and the differences are easier to see.</p>' +
+            '</div>' +
+            '<div class="card-body">' +
+              '<div class="col good"><h4><span class="mark" aria-hidden="true">✓</span>Top 3 strengths</h4><ol class="top-list good-list"></ol></div>' +
+              '<div class="col fix"><h4><span class="mark" aria-hidden="true">!</span>Top 3 to work on</h4><ol class="top-list fix-list"></ol><p class="card-note" style="display:none"></p></div>' +
+            '</div>' +
+            '<div class="card-extra">' +
+              '<span class="xs">Avg dmg <b>' + fmt(p.avgDmg) + '</b></span>' +
+              '<span class="xs">Avg taken <b>' + fmt(p.avgTaken) + '</b></span>' +
+              '<span class="xs">Dodges/min <b>' + f2(p.dodges) + '</b></span>' +
+              '<span class="xs">Objectives <b>' + f2(p.objectives) + '/g</b></span>' +
+              '<span class="xs">Late deaths <b>' + f1(p.lateDeaths) + '%</b></span>' +
+              '<span class="xs">Close-game grade <b>' + f1(p.closeGrade) + '</b></span>' +
+              '<span class="xs">Loss grade <b>' + f1(p.lossGrade) + '</b></span>' +
+              '<span class="xs">Consistency mean / median / floor <b>' + f1(p.consMean) + ' / ' + f1(p.consMedian) + ' / ' + f1(p.consFloor) + '</b></span>' +
+            '</div>';
+          card.querySelector("h3").textContent = p.name + (p.tag ? " (" + p.tag + ")" : "");
+          card.querySelector(".role-tag").textContent = p.role;
+          var goodList = card.querySelector(".good-list");
+          p.goodList.forEach(function (item) { var li = document.createElement("li"); li.textContent = item; goodList.appendChild(li); });
+          var fixList = card.querySelector(".fix-list");
+          p.fixList.forEach(function (item) { var li = document.createElement("li"); li.textContent = item; fixList.appendChild(li); });
+          if (p.note) { var noteEl = card.querySelector(".card-note"); noteEl.textContent = p.note; noteEl.style.display = "block"; }
+          var radarWrap = card.querySelector(".radar-wrap");
+          radarWrap.innerHTML = buildRadarSVG(p);
+          radarWrap.setAttribute("aria-label", "Radar chart for " + p.name + " (zoomed scale: center is " + RADAR_MIN + " and outer ring is " + f1(RADAR_MAX) + ", the highest subscore in the group — " + RADAR_MAX_PLAYER.name + "'s " + RADAR_MAX_DEF.label + " — shared by all six radars; green dots are at or above the group average for that criterion, red dots are below): " + SUB_DEFS.map(function (def) { return def.label + " " + f1(p.subs[def.key]) + " (group average " + f1(GROUP_AVG[def.key]) + ")"; }).join(", ") + ".");
+          wrap.appendChild(card);
+        });
+      }
+
+      // ---- Performance History (daily) ----
+      // Append new date entries here on each refresh; dates must stay ascending.
+      var HISTORY = [{"date":"2026-11-01","players":{"I3i3oy":{"mpr":55.7,"mmr":1579},"CreamiNataella":{"mpr":54.2,"mmr":1559},"pikabUwU":{"mpr":50.3,"mmr":1504},"Ohwutahel":{"mpr":46.2,"mmr":1446},"Vincent Chan":{"mpr":57.3,"mmr":1603},"Mashbrains":{"mpr":36.8,"mmr":1315}}},{"date":"2026-11-02","players":{"I3i3oy":{"mpr":51.8,"mmr":1526},"CreamiNataella":{"mpr":53.0,"mmr":1542},"pikabUwU":{"mpr":49.1,"mmr":1487},"Ohwutahel":{"mpr":47.0,"mmr":1457},"Vincent Chan":{"mpr":57.2,"mmr":1600},"Mashbrains":{"mpr":37.5,"mmr":1325}}}];
+
+      var CHART_PLAYERS = [
+        { name: "Vincent Chan", cls: "c1" },
+        { name: "I3i3oy", cls: "c2" },
+        { name: "CreamiNataella", cls: "c3" },
+        { name: "pikabUwU", cls: "c4" },
+        { name: "Ohwutahel", cls: "c5" },
+        { name: "Mashbrains", cls: "c6" }
+      ];
+
+      var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      function fmtDateShort(iso) {
+        var parts = iso.split("-");
+        var m = parseInt(parts[1], 10), d = parseInt(parts[2], 10);
+        return MONTHS[m - 1] + " " + d;
+      }
+      function fmtDateLong(iso) {
+        var parts = iso.split("-");
+        return fmtDateShort(iso) + ", " + parts[0];
+      }
+
+      function buildChart(containerId, legendId, metric, formatVal) {
+        var container = document.getElementById(containerId);
+        var legend = document.getElementById(legendId);
+        if (!container || !HISTORY.length) return;
+
+        // Domain
+        var allVals = [];
+        HISTORY.forEach(function (entry) {
+          CHART_PLAYERS.forEach(function (cp) {
+            var rec = entry.players[cp.name];
+            if (rec && typeof rec[metric] === "number") allVals.push(rec[metric]);
+          });
+        });
+        if (!allVals.length) return;
+        var rawMin = Math.min.apply(null, allVals);
+        var rawMax = Math.max.apply(null, allVals);
+        var step = metric === "mmr" ? 20 : 5;
+        var pad = metric === "mmr" ? 40 : 5;
+        var yMin = Math.floor((rawMin - pad) / step) * step;
+        var yMax = Math.ceil((rawMax + pad) / step) * step;
+        if (yMax - yMin < step * 3) { yMax = yMin + step * 3; }
+
+        var W = 720, H = 300;
+        var ML = 54, MR = 30, MT = 26, MB = 38;
+        var PW = W - ML - MR, PH = H - MT - MB;
+        function xFor(i) {
+          if (HISTORY.length === 1) return ML + PW / 2;
+          return ML + (PW * i) / (HISTORY.length - 1);
+        }
+        function yFor(v) { return MT + PH - ((v - yMin) / (yMax - yMin)) * PH; }
+
+        var ticks = 4;
+        var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+        // Gridlines + y labels
+        for (var t = 0; t <= ticks; t++) {
+          var tv = yMin + ((yMax - yMin) * t) / ticks;
+          var ty = yFor(tv);
+          svg += '<line class="chart-grid" x1="' + ML + '" y1="' + ty + '" x2="' + (W - MR) + '" y2="' + ty + '"/>';
+          svg += '<text class="chart-axis chart-axis-y" x="' + (ML - 8) + '" y="' + (ty + 4) + '">' + formatVal(tv) + '</text>';
+        }
+        // X labels
+        HISTORY.forEach(function (entry, i) {
+          svg += '<text class="chart-axis chart-axis-x" x="' + xFor(i) + '" y="' + (H - 10) + '">' + fmtDateShort(entry.date) + '</text>';
+        });
+        // Lines (only when 2+ dates)
+        if (HISTORY.length > 1) {
+          CHART_PLAYERS.forEach(function (cp) {
+            var pts = [];
+            HISTORY.forEach(function (entry, i) {
+              var rec = entry.players[cp.name];
+              if (rec && typeof rec[metric] === "number") pts.push(xFor(i).toFixed(1) + "," + yFor(rec[metric]).toFixed(1));
+            });
+            if (pts.length > 1) svg += '<polyline class="chart-line line-' + cp.cls + '" points="' + pts.join(" ") + '"/>';
+          });
+        }
+        // Dots + value labels (stagger labels when a single day so they don't collide)
+        CHART_PLAYERS.forEach(function (cp, pi) {
+          HISTORY.forEach(function (entry, i) {
+            var rec = entry.players[cp.name];
+            if (!rec || typeof rec[metric] !== "number") return;
+            var cx = xFor(i), cy = yFor(rec[metric]);
+            var single = HISTORY.length === 1;
+            // For a single date, spread value labels vertically by player index to avoid overlap
+            var labelY = single ? (MT + 14 + pi * 20) : (cy - 11);
+            var labelX = single ? cx + 16 : cx;
+            var anchor = single ? ' style="text-anchor:start"' : '';
+            if (single && pi % 2 === 1) { labelX = cx - 16; anchor = ' style="text-anchor:end"'; }
+            svg += '<circle class="chart-dot dot-' + cp.cls + '" cx="' + cx + '" cy="' + cy + '" r="6"><title>' + cp.name + ' — ' + fmtDateLong(entry.date) + ': ' + formatVal(rec[metric]) + '</title></circle>';
+            if (single) {
+              svg += '<line class="chart-grid" x1="' + cx + '" y1="' + cy + '" x2="' + labelX + '" y2="' + (labelY - 4) + '"/>';
+            }
+            svg += '<text class="chart-val val-' + cp.cls + '"' + anchor + ' x="' + labelX + '" y="' + labelY + '">' + formatVal(rec[metric]) + '</text>';
+          });
+        });
+        svg += '</svg>';
+        container.innerHTML = svg;
+
+        // Legend with latest values
+        if (legend) {
+          var latest = HISTORY[HISTORY.length - 1];
+          legend.innerHTML = "";
+          CHART_PLAYERS.forEach(function (cp) {
+            var rec = latest.players[cp.name];
+            var li = document.createElement("li");
+            li.innerHTML = '<span class="swatch sw-' + cp.cls + '" aria-hidden="true"></span><span></span>' + (rec ? ' <span class="lg-val">' + formatVal(rec[metric]) + '</span>' : '');
+            li.querySelector("span:nth-child(2)").textContent = cp.name;
+            legend.appendChild(li);
+          });
+        }
+        container.setAttribute("aria-label", container.getAttribute("aria-label") + " Latest, " + fmtDateLong(latest.date) + ": " + CHART_PLAYERS.map(function (cp) {
+          var rec = latest.players[cp.name];
+          return rec ? cp.name + " " + formatVal(rec[metric]) : cp.name;
+        }).join(", ") + ".");
+      }
+
+      function renderHistory() {
+        buildChart("chart-mpr", "legend-mpr", "mpr", function (v) { return v.toFixed(1); });
+        buildChart("chart-mmr", "legend-mmr", "mmr", function (v) { return Math.round(v).toLocaleString("en-US"); });
+      }
+
+      // Sorting (summary table)
+      var sortState = { key: "mpr", dir: -1 };
+      function sortBy(key, type) {
+        if (sortState.key === key) { sortState.dir *= -1; } else { sortState.key = key; sortState.dir = type === "text" ? 1 : -1; }
+        var rows = PLAYERS.slice().sort(function (a, b) {
+          var va = type === "text" ? a.name.toLowerCase() : a[key];
+          var vb = type === "text" ? b.name.toLowerCase() : b[key];
+          if (va < vb) return -1 * sortState.dir;
+          if (va > vb) return 1 * sortState.dir;
+          return 0;
+        });
+        var ths = document.querySelectorAll("#summary-table thead th");
+        ths.forEach(function (th) { th.removeAttribute("aria-sort"); });
+        var btn = document.querySelector('#summary-table button[data-key="' + key + '"]');
+        if (btn) {
+          btn.closest("th").setAttribute("aria-sort", sortState.dir === 1 ? "ascending" : "descending");
+          btn.querySelector(".sort-arrow").textContent = sortState.dir === 1 ? "▲" : "▼";
+        }
+        renderTable(rows);
+      }
+      document.querySelectorAll("#summary-table thead th button").forEach(function (btn) {
+        btn.addEventListener("click", function () { sortBy(btn.getAttribute("data-key"), btn.getAttribute("data-type")); });
+      });
+
+      renderTable(PLAYERS);
+      renderSubscores();
+      renderHistory();
+      renderCards();
+    </script>
+  </body>
+</html>
