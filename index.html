@@ -297,6 +297,11 @@
       .col ol.top-list li:last-child { margin-bottom: 0; }
       .col ol.top-list li::marker { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink); }
       .col .card-note { margin-top: 12px; font-size: 13.5px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 10px; }
+      /* Work-on items: bold headline, evidence line, Fix line */
+      .col ol.top-list li strong.fix-head { display: block; color: var(--ink); font-size: 15.5px; line-height: 1.35; }
+      .col ol.top-list li .fix-ev { display: block; margin-top: 2px; }
+      .col ol.top-list li .fix-tip { display: block; margin-top: 4px; }
+      .col ol.top-list li .fix-tip b { color: var(--red); font-weight: 700; }
       /* ---------- Champion focus (player cards) ---------- */
       .champ-section { border-top: 1px solid var(--line); }
       .champ-head {
@@ -778,6 +783,78 @@
         }
       ];
 
+      // Work-on items in plain language: a bold headline naming the exact
+      // problem, one evidence sentence with the player's numbers vs the
+      // group benchmark, and one concrete "Fix:" instruction.
+      var FIX_DETAILS = {
+        "I3i3oy": [
+          { headline: "Your play drops off a cliff in losses",
+            evidence: "In games you lose, you grade 45.8 against your 55.2 overall average — a 9.4-point drop, the joint-biggest in the group. Your grade in close games is fine (53.3), so it is specifically losing games that unravel.",
+            fix: "When your team falls behind, stop trying to force a fight to get back in. Play safe, clear waves, and only fight when you have a numbers advantage or the enemy makes a mistake first." },
+          { headline: "You are not in enough of your team's kills",
+            evidence: "Your kill participation is 67.2% — Vincent Chan and CreamiNataella are both at 75%. Teamplay is your only below-average criterion.",
+            fix: "Be standing with your team before fights start, not arriving after. If a fight is about to happen, drop what you are doing and get in range — being there at the start matters more than chasing the last runner at the end." },
+          { headline: "Vayne: you win, but you are not the reason",
+            evidence: "You are 7-1 on Vayne, yet you grade 49.3 on her — 5.9 points below your own average. Your team is winning those games without your usual damage.",
+            fix: "On Vayne, join fights earlier instead of playing like a late-game insurance policy. If you are not going to play her aggressively, swap her away — your Varus (76.8) and Ahri (67.2) games show what your active picks look like." }
+        ],
+        "CreamiNataella": [
+          { headline: "After won fights, hit the turret",
+            evidence: "You get credit for 15.8% of your teams' turret and inhibitor takedowns — the lowest share in the group. I3i3oy, for comparison, takes 29.3%. Conversion is your weakest criterion.",
+            fix: "When your team wins a fight, walk to the turret and hit it until the next wave or fight forces you off. Do not drift back to heal or hover — as the support anchor you are free to hit structures while the carries watch for respawns." },
+          { headline: "Braum is your one bad repeat pick",
+            evidence: "You grade 50.3 on Braum, 5.4 points below your average, and Braum wins only 47.1% of games population-wide. Your Miss Fortune (+7.5) and Malphite (+4.6) both grade above your average.",
+            fix: "When Braum comes up and the bench offers anything you are comfortable on, swap him away." },
+          { headline: "Your worst games are all on one-off champions",
+            evidence: "You played 35 different champions in 50 games — the widest pool in the group — and your worst-quarter games grade 42.9 against your 55.7 average.",
+            fix: "Your floor games are unfamiliar picks, not bad play. When the bench offers a champion you know, take it instead of gambling on a first-timer." }
+        ],
+        "pikabUwU": [
+          { headline: "Your damage is too low, even for your role",
+            evidence: "You deal 1,550 damage per minute and 16.1% of your teams' damage — the lowest in the group outside Mashbrains. Output is your weakest criterion by a wide margin.",
+            fix: "On mages, cast at the frontline cluster on cooldown instead of holding spells for the perfect target. On enchanters, weave auto-attacks in between shields and heals. More casts per fight, even imperfect ones, beats saved cooldowns." },
+          { headline: "You get hit by too many skillshots",
+            evidence: "You dodge 2.95 skillshots per minute; the group average is 3.58 and Ohwutahel dodges 5.29. Mechanics is your second-weakest criterion.",
+            fix: "Never stand still while casting or aiming. Move side-to-side between every cast, and step perpendicular to incoming skillshots instead of backing straight away from them." },
+          { headline: "Stop taking Skilled Sniper",
+            evidence: "Skilled Sniper is your most-taken trap augment: 5 times, and it wins only 47.0% of games population-wide.",
+            fix: "When Skilled Sniper is offered next to a neutral option, take the other one. Your proven picks — The Boom and the Bass (53.6%) and Weapon of Destiny (53.2%) — are what your good drafts look like." }
+        ],
+        "Ohwutahel": [
+          { headline: "You die more than anyone — 11.4 times a game",
+            evidence: "You die 11.36 times per game; nobody else in the group is above 9.76. Dying is part of a frontline's job, but your KDA efficiency is the group's worst gap, which means too many of those deaths buy nothing.",
+            fix: "Before you go in, check that your team is alive and in range to follow up. If two teammates are dead or walking back, wait — an engage nobody can follow is just a death. Die starting a fight your team wins, not starting one alone." },
+          { headline: "Two of your favorite augments are traps",
+            evidence: "Ultimate Recursion (46.9% population win rate, taken 5 times) and Ice Cold (47.4%, taken 5 times) are both below-average augments that you keep defaulting to.",
+            fix: "When either is offered next to anything neutral, take the other option. Your Mad Scientist (53.4%) and Armored Impact (52.8%, taken 9 times) games show the difference a good draft makes." },
+          { headline: "When losses snowball, you keep engaging the same way",
+            evidence: "In losses you grade 40.4 against your 48.5 average, but in close games you actually grade above your average (50.7) — so it is the already-lost fights where the pattern breaks.",
+            fix: "After your team loses two fights in a row, switch jobs: stop starting fights, stand on your carries, and only counter-engage when the enemy dives them." }
+        ],
+        "Vincent Chan": [
+          { headline: "Your deaths come late, when they cost the most",
+            evidence: "28.9% of your deaths happen in the last quarter of games — the highest rate in the group — and Death quality is your lowest criterion. Late deaths have the longest timers, so they are the ones that throw won games.",
+            fix: "When your team is ahead after 15 minutes, stop taking solo fights. Stay grouped, spend your gold when you have it, and let the enemy be the one who has to force something." },
+          { headline: "You dodge the fewest skillshots in the group",
+            evidence: "You dodge 2.78 skillshots per minute; the group average is 3.58. You out-damage everyone anyway, but this is why your death numbers lag your output.",
+            fix: "Sidestep after every auto-attack and spell instead of standing your ground to trade. Small constant strafing, even while you are the one attacking." },
+          { headline: "Shaco is your one leak pick",
+            evidence: "You grade 45.9 on Shaco — 11.7 points below your own average, your worst repeat champion by far. On Senna you grade 72.2.",
+            fix: "Swap Shaco away whenever the bench gives you any real alternative." }
+        ],
+        "Mashbrains": [
+          { headline: "Your damage is half of what it should be",
+            evidence: "You deal 1,211 damage per minute — barely half of Vincent Chan's 2,421 — and just 14.1% of your teams' damage, the lowest in the group. Output is your weakest criterion by a huge margin.",
+            fix: "In fights, hit whoever is in range instead of walking past the frontline looking for the backline. Staying in the fight and hitting the nearest target beats dying on the way to a better one." },
+          { headline: "You are missing from 4 out of 10 kills",
+            evidence: "Your kill participation is 57.9%; the next lowest in the group is 67.2%. In 42% of your teams' kills you were not there — usually dead or walking back when the fight started.",
+            fix: "Value being alive and present when a fight starts over one more risky poke trade. If your team is posturing to fight, be there before it starts, not after." },
+          { headline: "Your augment defaults are all below average",
+            evidence: "None of your repeat augments is above-average population-wide, and three are outright traps: Pandora's Box (47.0%, taken 3 times), Thread the Needle (47.2%, 4 times), Bread and Cheese (47.4%, 3 times). You also finished 4.0 wins below expectation on the easiest champion schedule in the group — the deals are not the problem.",
+            fix: "At draft, if any offered augment is a known strong one, take it over your usual defaults. Your current habits cost you a few percent of win rate in game after game." }
+        ]
+      };
+
       function fmt(n) { return n.toLocaleString("en-US"); }
       function f1(n) { return n.toFixed(1); }
       function f2(n) { return n.toFixed(2); }
@@ -1079,7 +1156,29 @@
           var goodList = card.querySelector(".good-list");
           p.goodList.forEach(function (item) { var li = document.createElement("li"); li.textContent = item; goodList.appendChild(li); });
           var fixList = card.querySelector(".fix-list");
-          p.fixList.forEach(function (item) { var li = document.createElement("li"); li.textContent = item; fixList.appendChild(li); });
+          var fixItems = (typeof FIX_DETAILS !== "undefined" && FIX_DETAILS[p.name]) ? FIX_DETAILS[p.name] : p.fixList;
+          fixItems.forEach(function (item) {
+            var li = document.createElement("li");
+            if (typeof item === "string") { li.textContent = item; }
+            else {
+              var head = document.createElement("strong");
+              head.className = "fix-head";
+              head.textContent = item.headline;
+              var ev = document.createElement("span");
+              ev.className = "fix-ev";
+              ev.textContent = item.evidence;
+              var tip = document.createElement("span");
+              tip.className = "fix-tip";
+              var fb = document.createElement("b");
+              fb.textContent = "Fix: ";
+              tip.appendChild(fb);
+              tip.appendChild(document.createTextNode(item.fix));
+              li.appendChild(head);
+              li.appendChild(ev);
+              li.appendChild(tip);
+            }
+            fixList.appendChild(li);
+          });
           if (p.note) { var noteEl = card.querySelector(".card-note"); noteEl.textContent = p.note; noteEl.style.display = "block"; }
           var radarWrap = card.querySelector(".radar-wrap");
           radarWrap.innerHTML = buildRadarSVG(p);
