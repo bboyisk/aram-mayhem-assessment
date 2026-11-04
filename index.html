@@ -573,18 +573,18 @@
         <div class="history-grid">
           <div class="chart-card">
             <h3>Performance Score — daily history</h3>
-            <p class="chart-sub">0–100 scale · one point per player per day</p>
+            <p class="chart-sub">0–100 scale · one point per player per day · Y-axis zoomed to the range the data covers, so close lines separate — the axis does not start at 0</p>
             <div class="chart-wrap" id="chart-mpr" role="img" aria-label="Line chart of daily Performance Score history for each player"></div>
             <ul class="chart-legend" id="legend-mpr" aria-label="Performance Score legend"></ul>
           </div>
           <div class="chart-card">
             <h3>MMR-style — daily history</h3>
-            <p class="chart-sub">MMR-style rating · one point per player per day</p>
+            <p class="chart-sub">MMR-style rating · one point per player per day · Y-axis zoomed to the range the data covers, so close lines separate — the axis does not start at the scale minimum</p>
             <div class="chart-wrap" id="chart-mmr" role="img" aria-label="Line chart of daily MMR-style history for each player"></div>
             <ul class="chart-legend" id="legend-mmr" aria-label="MMR-style legend"></ul>
           </div>
         </div>
-        <p class="history-note">History is tracked under the per-player last-50 definition — each day's refresh adds a point, so the lines grow over time.</p>
+        <p class="history-note">History is tracked under the per-player last-50 definition — each day's refresh adds a point, so the lines grow over time. Both charts zoom their Y-axis to the range the data actually covers, re-derived from the history on every refresh, so players sitting a point or two apart don't draw on top of each other.</p>
       </section>
 
       <section aria-labelledby="players-h">
@@ -1001,13 +1001,17 @@
         if (!allVals.length) return;
         var rawMin = Math.min.apply(null, allVals);
         var rawMax = Math.max.apply(null, allVals);
-        var step = metric === "mmr" ? 20 : 5;
-        var pad = metric === "mmr" ? 40 : 5;
+        // Zoomed domain: hug the data range with just enough headroom for the
+        // value labels, snapped to a fine step. Re-derived from HISTORY on
+        // every refresh, so the lines stay separated as the data moves —
+        // players a point or two apart no longer draw on top of each other.
+        var step = metric === "mmr" ? 10 : 1;
+        var pad = metric === "mmr" ? 10 : 1.5;
         var yMin = Math.floor((rawMin - pad) / step) * step;
         var yMax = Math.ceil((rawMax + pad) / step) * step;
         if (yMax - yMin < step * 3) { yMax = yMin + step * 3; }
 
-        var W = 720, H = 300;
+        var W = 720, H = 360;
         var ML = 54, MR = 30, MT = 26, MB = 38;
         var PW = W - ML - MR, PH = H - MT - MB;
         function xFor(i) {
