@@ -478,20 +478,20 @@
         <h2 id="ps-strip-h">Performance Scores</h2>
         <p class="ps-sub">Assigned Performance Score per player — each player’s last 50 ARAM Mayhem games, 0–100 scale. Ranked highest to lowest.</p>
         <ol class="ps-list">
-          <li class="ps-item first"><span class="ps-rank">1st</span><span class="ps-name">Vincent Chan</span><span class="ps-score">56.8</span><span class="ps-mmr">MMR-style 1595</span></li>
-          <li class="ps-item"><span class="ps-rank">2nd</span><span class="ps-name">I3i3oy</span><span class="ps-score">54.5</span><span class="ps-mmr">MMR-style 1563</span></li>
-          <li class="ps-item"><span class="ps-rank">3rd</span><span class="ps-name">CreamiNataella</span><span class="ps-score">54.5</span><span class="ps-mmr">MMR-style 1563</span></li>
-          <li class="ps-item"><span class="ps-rank">4th</span><span class="ps-name">pikabUwU</span><span class="ps-score">48.0</span><span class="ps-mmr">MMR-style 1473</span></li>
-          <li class="ps-item"><span class="ps-rank">5th</span><span class="ps-name">Ohwutahel</span><span class="ps-score">47.3</span><span class="ps-mmr">MMR-style 1462</span></li>
-          <li class="ps-item"><span class="ps-rank">6th</span><span class="ps-name">Mashbrains</span><span class="ps-score">37.4</span><span class="ps-mmr">MMR-style 1324</span></li>
+          <li class="ps-item first"><span class="ps-rank">1st</span><span class="ps-name">Vincent Chan</span><span class="ps-score">56.7</span><span class="ps-mmr">MMR-style 1594</span></li>
+          <li class="ps-item"><span class="ps-rank">2nd</span><span class="ps-name">I3i3oy</span><span class="ps-score">54.8</span><span class="ps-mmr">MMR-style 1567</span></li>
+          <li class="ps-item"><span class="ps-rank">3rd</span><span class="ps-name">CreamiNataella</span><span class="ps-score">54.4</span><span class="ps-mmr">MMR-style 1561</span></li>
+          <li class="ps-item"><span class="ps-rank">4th</span><span class="ps-name">pikabUwU</span><span class="ps-score">47.9</span><span class="ps-mmr">MMR-style 1470</span></li>
+          <li class="ps-item"><span class="ps-rank">5th</span><span class="ps-name">Ohwutahel</span><span class="ps-score">47.2</span><span class="ps-mmr">MMR-style 1461</span></li>
+          <li class="ps-item"><span class="ps-rank">6th</span><span class="ps-name">Mashbrains</span><span class="ps-score">36.8</span><span class="ps-mmr">MMR-style 1315</span></li>
         </ol>
       </section>
 
       <div class="highlights" aria-label="Group highlights">
         <div class="hl">
           <p class="hl-label">Top rated · Performance Score</p>
-          <p class="hl-value">56.8</p>
-          <p class="hl-who">Vincent Chan · MMR-style 1595</p>
+          <p class="hl-value">56.7</p>
+          <p class="hl-who">Vincent Chan · MMR-style 1594</p>
         </div>
         <div class="hl">
           <p class="hl-label">Highest damage / min</p>
@@ -603,15 +603,15 @@
           <p>Based on <strong>each player’s last 50 ARAM Mayhem games on PlayARAM</strong> — 300 player-games across 147 unique games, with remakes under 5 minutes excluded. There is no together-games filter: every player is scored on their own last 50 games, so each player has exactly 50 games. Every game is graded 0–100 per criterion against players on the same <strong>role archetype (Damage / Frontline / Support)</strong>, with percentiles computed across the <strong>300 player-games</strong> in the dataset, so tanks and supports are not judged on carry stats.</p>
           <h3>The seven criteria</h3>
           <ul>
-            <li><strong>Output</strong> — damage per minute. For Frontline: damage taken + damage dealt. For Support: assists + damage.</li>
+            <li><strong>Output</strong> — blends per-minute rates with the player's share of their own in-game team's totals. For Damage: 50% damage-per-minute percentile + 50% team damage-share percentile. For Frontline: 55% damage-taken part (half taken per minute, half team taken-share) + 45% damage part (the same blend as Damage). For Support: 55% assists per minute + 45% damage part (the same blend).</li>
             <li><strong>KDA efficiency</strong> — kills, deaths and assists weighed against the archetype's expected line.</li>
             <li><strong>Teamplay</strong> — kill participation: (kills + assists) ÷ team kills.</li>
             <li><strong>Death quality</strong> — deaths per minute (Frontline also credited for damage soaked per death), blended with late-game death timing taken from each match's timeline.</li>
-            <li><strong>Conversion</strong> — turrets and inhibitors the player is credited with in the match timeline: turning fights into structures.</li>
+            <li><strong>Conversion</strong> — the percentile, within the player's archetype, of their share of their own team's structure takedowns: credited turrets and inhibitors divided by the team's total that game. Turning fights into structures, measured as a share rather than a raw count.</li>
             <li><strong>Augments</strong> — how the augments that player drafted performed across the whole group's 300 player-games in this dataset (win rate + KDA, augments seen at least 3 times).</li>
-            <li><strong>Mechanics</strong> — skillshots dodged and snowball hits per minute, both shown on PlayARAM summary cards.</li>
+            <li><strong>Mechanics</strong> — skillshots dodged per minute, as shown on PlayARAM summary cards. Dodges only.</li>
           </ul>
-          <p id="radar-method-text">Each player card's radar chart plots that player's seven criteria subscores against the group average across the same seven criteria, so strengths and gaps are visible at a glance. Radar scale: zoomed — the center is 30 and the outer ring is 65.4, the highest subscore in the group (Vincent Chan's Output), so all six radars share one scale and the differences are easier to see.</p>
+          <p id="radar-method-text">Each player card's radar chart plots that player's seven criteria subscores against the group average across the same seven criteria, so strengths and gaps are visible at a glance. Radar scale: zoomed — the center is 30 and the outer ring is 65.9, the highest subscore in the group (Vincent Chan's Output), so all six radars share one scale and the differences are easier to see.</p>
           <h3>From grades to a rating</h3>
           <p>The overall assigned score is the <strong>Performance Score (Mayhem Performance Rating)</strong> — the number shown in the ranking strip, the summary table, and at the top of each player card.</p>
           <p class="formula">Performance Score (Mayhem Performance Rating) = 55% mean game grade + 20% median grade + 10% floor (25th percentile) grade + 15% win rate</p>
@@ -642,59 +642,59 @@
       var PLAYERS = [
         {
           name: "Vincent Chan", tag: "", role: "Main Carry",
-          mpr: 56.8, mmr: 1595, games: 50, wins: 28, losses: 22, kda: 3.95, dpm: 2421, dmgShare: 21.9, kp: 75.0, deaths: 9.76,
-          subs: { output: 65.4, kdaEff: 57.7, teamplay: 64.3, death: 45.4, conversion: 52.7, augments: 58.7, mechanics: 46.4 },
-          avgDmg: 44062, avgTaken: 35108, dodges: 2.78, snowball: 0.21, objectives: 0.74, lateDeaths: 28.9, closeGrade: 56.8, lossGrade: 54.4,
-          consMean: 58.0, consMedian: 58.1, consFloor: 48.8,
-          goodList: ["Group-best damage output \u2014 Output 65.4, 2,421 dmg/min and 21.9% of the group's total damage.", "Group-best Teamplay 64.3 with 75.0% kill participation \u2014 he is in nearly every fight.", "The group's most consistent player and its best in losses: floor grade 48.8 and a 54.4 average grade in losses, both group-best. Senna posts a 5.20 KDA across 4 games; Smolder a 6.17 in 2."],
-          fixList: ["Death quality 45.4, below the group average \u2014 and his 28.9% late-death share is the highest in the group, so too many deaths come at the worst time.", "Mechanics 46.4, below group average despite the top-end output.", "Conversion only 52.7 \u2014 mid-pack even with the group's biggest damage lead. Brand is 1-3 despite a 4.20 KDA."]
+          mpr: 56.7, mmr: 1594, games: 50, wins: 28, losses: 22, kda: 3.95, dpm: 2421, dmgShare: 21.9, kp: 75.0, deaths: 9.76,
+          subs: { output: 65.9, kdaEff: 57.7, teamplay: 64.3, death: 45.4, conversion: 48.5, augments: 58.7, mechanics: 45.0 },
+          avgDmg: 44062, avgTaken: 35108, dodges: 2.78, teamDmgShare: 24.5, teamTakenShare: 17.8, objectives: 0.74, lateDeaths: 28.9, closeGrade: 56.3, lossGrade: 54.8,
+          consMean: 57.7, consMedian: 59.1, consFloor: 47.9,
+          goodList: ["Group-best damage output \u2014 Output 65.9, 2,421 dmg/min and 21.9% of the group's total damage, plus a group-high 24.5% share of his own team's damage.", "Group-best Teamplay 64.3 with 75.0% kill participation \u2014 he is in nearly every fight.", "The group's most consistent player and its best in losses: floor grade 47.9 and a 54.8 average grade in losses, both group-best. Smolder posts a 6.17 KDA in 2 games; Senna a 5.20 KDA across 4 games."],
+          fixList: ["Death quality 45.4, below the group average \u2014 and his 28.9% late-death share is the highest in the group, so too many deaths come at the worst time.", "Mechanics 45.0, below group average despite the top-end output \u2014 only 2.78 skillshots dodged per minute, the lowest in the group.", "Conversion only 48.5 \u2014 around the group average even with the group's biggest damage lead. Brand is 1-3 despite a 4.20 KDA."]
         },
         {
           name: "I3i3oy", tag: "Tim", role: "Second Carry",
-          mpr: 54.5, mmr: 1563, games: 50, wins: 28, losses: 22, kda: 3.73, dpm: 2363, dmgShare: 21.2, kp: 67.2, deaths: 9.02,
-          subs: { output: 60.2, kdaEff: 53.5, teamplay: 46.7, death: 52.6, conversion: 61.5, augments: 59.3, mechanics: 46.0 },
-          avgDmg: 42597, avgTaken: 38132, dodges: 3.27, snowball: 0.09, objectives: 1.26, lateDeaths: 26.9, closeGrade: 52.9, lossGrade: 45.3,
-          consMean: 55.1, consMedian: 58.7, consFloor: 40.8,
-          goodList: ["Group-best Conversion 61.5 \u2014 nobody turns fights into wins better.", "Output 60.2, second-best in the group, at 2,363 dmg/min.", "Strong typical game \u2014 median grade 58.7 plus Augments 59.3; Vayne is a proven pocket pick at 7-1 across 8 games, and Akshan is 4-1 with a 5.52 KDA."],
-          fixList: ["Teamplay 46.7 \u2014 67.2% kill participation is second-lowest in the group; too many fights happen without him.", "Mechanics 46.0, below the group average.", "Big drop-off in losses: 45.3 average grade in losses versus 52.9 in close games."]
+          mpr: 54.8, mmr: 1567, games: 50, wins: 28, losses: 22, kda: 3.73, dpm: 2363, dmgShare: 21.2, kp: 67.2, deaths: 9.02,
+          subs: { output: 61.2, kdaEff: 53.5, teamplay: 46.7, death: 52.6, conversion: 57.7, augments: 59.3, mechanics: 50.0 },
+          avgDmg: 42597, avgTaken: 38132, dodges: 3.27, teamDmgShare: 23.8, teamTakenShare: 19.1, objectives: 1.26, lateDeaths: 26.9, closeGrade: 53.3, lossGrade: 45.8,
+          consMean: 55.2, consMedian: 59.1, consFloor: 42.4,
+          goodList: ["Group-best Conversion 57.7 \u2014 nobody turns fights into structures better, taking a 29.3% share of his teams' structure takedowns.", "Output 61.2, second-best in the group, at 2,363 dmg/min and 23.8% of his own team's damage.", "Strong typical game \u2014 median grade 59.1 plus Augments 59.3; Vayne is a proven pocket pick at 7-1 across 8 games, and Akshan is 4-1 with a 5.52 KDA."],
+          fixList: ["Teamplay 46.7 \u2014 67.2% kill participation is second-lowest in the group; too many fights happen without him.", "Big drop-off in losses: 45.8 average grade in losses versus 53.3 in close games.", "Mechanics 50.0 sits right at the group average \u2014 3.27 skillshots dodged per minute leaves room to grow for a carry."]
         },
         {
           name: "CreamiNataella", tag: "", role: "Support Anchor",
-          mpr: 54.5, mmr: 1563, games: 50, wins: 27, losses: 23, kda: 4.54, dpm: 1779, dmgShare: 16.1, kp: 75.4, deaths: 8.24,
-          subs: { output: 52.2, kdaEff: 59.6, teamplay: 59.3, death: 57.5, conversion: 48.3, augments: 62.3, mechanics: 50.8 },
-          avgDmg: 32425, avgTaken: 37953, dodges: 3.6, snowball: 0.29, objectives: 0.52, lateDeaths: 25.3, closeGrade: 54.6, lossGrade: 50.3,
-          consMean: 55.8, consMedian: 57.7, consFloor: 42.0,
+          mpr: 54.4, mmr: 1561, games: 50, wins: 27, losses: 23, kda: 4.54, dpm: 1779, dmgShare: 16.1, kp: 75.4, deaths: 8.24,
+          subs: { output: 52.7, kdaEff: 59.6, teamplay: 59.3, death: 57.5, conversion: 47.4, augments: 62.3, mechanics: 49.1 },
+          avgDmg: 32425, avgTaken: 37953, dodges: 3.6, teamDmgShare: 17.8, teamTakenShare: 19.8, objectives: 0.52, lateDeaths: 25.3, closeGrade: 54.7, lossGrade: 50.7,
+          consMean: 55.7, consMedian: 56.8, consFloor: 42.9,
           goodList: ["Group-best KDA efficiency 59.6 \u2014 a 4.54 KDA with the group's highest kill participation (75.4%).", "Group-best Death quality 57.5 \u2014 the fewest deaths per game in the group (8.24).", "Group-best Augments 62.3 \u2014 consistently strong augment choices. Milio is 2-0 with an 11.67 KDA."],
-          fixList: ["Conversion 48.3, the weakest of the top half \u2014 advantages she helps create are not turning into wins.", "Output 52.2 sits right at the group average, with the caveat that PlayARAM publishes no healing or shielding, so enchanter value is undercounted here.", "Two most-played picks are underwater: Malphite and Miss Fortune are both 1-2 in this window."],
+          fixList: ["Conversion 47.4, the weakest in the group \u2014 advantages she helps create are not turning into structures; she takes only a 15.8% share of her teams' structure takedowns.", "Output 52.7 sits right at the group average, with the caveat that PlayARAM publishes no healing or shielding, so enchanter value is undercounted here.", "Two most-played picks are underwater: Malphite and Miss Fortune are both 1-2 in this window."],
           note: "Note: PlayARAM does not publish healing/shielding, so enchanter value is likely understated by this score."
         },
         {
           name: "pikabUwU", tag: "", role: "Utility Mage / Support",
-          mpr: 48.0, mmr: 1473, games: 50, wins: 27, losses: 23, kda: 4.05, dpm: 1550, dmgShare: 13.6, kp: 70.1, deaths: 8.46,
-          subs: { output: 42.5, kdaEff: 53.2, teamplay: 47.3, death: 53.2, conversion: 51.5, augments: 61.8, mechanics: 43.8 },
-          avgDmg: 27309, avgTaken: 29478, dodges: 2.95, snowball: 0.14, objectives: 0.68, lateDeaths: 25.9, closeGrade: 46.4, lossGrade: 39.1,
-          consMean: 48.9, consMedian: 48.7, consFloor: 33.0,
+          mpr: 47.9, mmr: 1470, games: 50, wins: 27, losses: 23, kda: 4.05, dpm: 1550, dmgShare: 13.6, kp: 70.1, deaths: 8.46,
+          subs: { output: 40.5, kdaEff: 53.2, teamplay: 47.3, death: 53.2, conversion: 49.7, augments: 61.8, mechanics: 43.4 },
+          avgDmg: 27309, avgTaken: 29478, dodges: 2.95, teamDmgShare: 16.1, teamTakenShare: 16.7, objectives: 0.68, lateDeaths: 25.9, closeGrade: 45.3, lossGrade: 38.7,
+          consMean: 48.1, consMedian: 49.6, consFloor: 33.9,
           goodList: ["Augments 61.8, second-best in the group.", "Clean, efficient play \u2014 Death quality 53.2 and KDA efficiency 53.2, with only 8.46 deaths per game.", "Two undefeated pocket picks: Lux and Cassiopeia are both 3-0, and Hwei is 4-1 with a 5.45 KDA."],
-          fixList: ["Output 42.5 \u2014 second-lowest damage in the group at 1,550 dmg/min.", "Mechanics 43.8 is the group's lowest, with only 2.95 skillshots dodged per minute.", "A low floor sinks him: Q1 grade of 33.0 and a 39.1 average grade in losses. Senna is 0-2."],
+          fixList: ["Output 40.5 \u2014 second-lowest in the group at 1,550 dmg/min and only 16.1% of his own team's damage.", "Mechanics 43.4 is the group's lowest, with only 2.95 skillshots dodged per minute.", "A low floor sinks him: Q1 grade of 33.9 and a 38.7 average grade in losses. Senna is 0-2."],
           note: "Note: PlayARAM does not publish healing/shielding, so enchanter value is likely understated by this score."
         },
         {
           name: "Ohwutahel", tag: "", role: "Frontline",
-          mpr: 47.3, mmr: 1462, games: 50, wins: 24, losses: 26, kda: 3.02, dpm: 1870, dmgShare: 16.5, kp: 72.4, deaths: 11.36,
-          subs: { output: 55.9, kdaEff: 36.6, teamplay: 52.6, death: 40.9, conversion: 52.5, augments: 56.7, mechanics: 55.5 },
-          avgDmg: 33101, avgTaken: 54368, dodges: 5.29, snowball: 0.3, objectives: 0.72, lateDeaths: 25.2, closeGrade: 51.3, lossGrade: 40.8,
-          consMean: 48.9, consMedian: 48.4, consFloor: 35.4,
-          goodList: ["Real frontline output \u2014 Output 55.9 and 1,870 dmg/min while soaking a group-high 54,368 damage taken per game.", "Mechanics 55.5, second-best in the group \u2014 his 5.29 skillshots dodged per minute is the group best by a wide margin.", "Perfect records on three frontline picks: Sion, Taric and Shen are all 3-0."],
-          fixList: ["KDA efficiency 36.6 is the group's worst \u2014 11.36 deaths per game is also the group high.", "Death quality 40.9, second-lowest: too many of those deaths give the fight away cheaply.", "His most-played champion is his worst line: Trundle is 1-3 in this window."]
+          mpr: 47.2, mmr: 1461, games: 50, wins: 24, losses: 26, kda: 3.02, dpm: 1870, dmgShare: 16.5, kp: 72.4, deaths: 11.36,
+          subs: { output: 55.8, kdaEff: 36.6, teamplay: 52.6, death: 40.9, conversion: 48.2, augments: 56.7, mechanics: 57.3 },
+          avgDmg: 33101, avgTaken: 54368, dodges: 5.29, teamDmgShare: 18.4, teamTakenShare: 28.1, objectives: 0.72, lateDeaths: 25.2, closeGrade: 50.7, lossGrade: 40.4,
+          consMean: 48.5, consMedian: 49.2, consFloor: 34.5,
+          goodList: ["Real frontline output \u2014 Output 55.8 and 1,870 dmg/min while soaking a group-high 54,368 damage taken per game, a group-high 28.1% share of his teams' damage taken.", "Mechanics 57.3, the best in the group \u2014 his 5.29 skillshots dodged per minute is the group best by a wide margin.", "Perfect records on three frontline picks: Sion, Taric and Shen are all 3-0."],
+          fixList: ["KDA efficiency 36.6 is the group's worst \u2014 11.36 deaths per game is also the group high.", "Death quality 40.9, the group's lowest: too many of those deaths give the fight away cheaply.", "Conversion 48.2 sits at the group average despite the frontline presence, and his most-played champion is his worst line: Trundle is 1-3 in this window."]
         },
         {
           name: "Mashbrains", tag: "", role: "Melee Bruiser",
-          mpr: 37.4, mmr: 1324, games: 50, wins: 22, losses: 28, kda: 3.04, dpm: 1211, dmgShare: 10.7, kp: 57.9, deaths: 8.70,
-          subs: { output: 23.7, kdaEff: 39.4, teamplay: 29.8, death: 50.4, conversion: 52.3, augments: 52.1, mechanics: 57.6 },
-          avgDmg: 21493, avgTaken: 31229, dodges: 3.57, snowball: 0.24, objectives: 0.76, lateDeaths: 27.9, closeGrade: 39.3, lossGrade: 36.2,
-          consMean: 37.8, consMedian: 36.9, consFloor: 26.4,
-          goodList: ["Group-best Mechanics 57.6 \u2014 the raw hands are the best in the group.", "Conversion 52.3 sits at the group average: the fights he is in do turn into progress.", "Death quality 50.4 is mid-pack, and Garen (4-2) is a reliable pick."],
-          fixList: ["Output 23.7 is the group's lowest by a wide margin \u2014 1,211 dmg/min is barely half the group leaders.", "Teamplay 29.8 is the group's lowest: 57.9% kill participation means he is missing from too many fights.", "KDA efficiency 39.4 and a group-worst 22-28 record; Ekko is 0-3 in this window."]
+          mpr: 36.8, mmr: 1315, games: 50, wins: 22, losses: 28, kda: 3.04, dpm: 1211, dmgShare: 10.7, kp: 57.9, deaths: 8.7,
+          subs: { output: 23.9, kdaEff: 39.4, teamplay: 29.8, death: 50.4, conversion: 48.5, augments: 52.1, mechanics: 55.3 },
+          avgDmg: 21493, avgTaken: 31229, dodges: 3.57, teamDmgShare: 14.1, teamTakenShare: 17.7, objectives: 0.76, lateDeaths: 27.9, closeGrade: 38.6, lossGrade: 36.4,
+          consMean: 37.4, consMedian: 34.7, consFloor: 26.5,
+          goodList: ["Mechanics 55.3, second-best in the group \u2014 the raw hands are there, at 3.57 skillshots dodged per minute.", "Death quality 50.4 is mid-pack, and Conversion 48.5 sits at the group average: the fights he is in do turn into progress.", "Garen (4-2) is a reliable pick, and Augments 52.1 sits at the group average."],
+          fixList: ["Output 23.9 is the group's lowest by a wide margin \u2014 1,211 dmg/min and only 14.1% of his own team's damage, barely half the group leaders.", "Teamplay 29.8 is the group's lowest: 57.9% kill participation means he is missing from too many fights.", "KDA efficiency 39.4 and a group-worst 22-28 record; Ekko is 0-3 in this window."]
         }
       ];
 
@@ -921,6 +921,8 @@
                 '<span class="cs">KDA <b>' + f2(p.kda) + '</b></span>' +
                 '<span class="cs">Dmg/min <b>' + fmt(p.dpm) + '</b></span>' +
                 '<span class="cs">Damage share <b>' + f1(p.dmgShare) + '%</b></span>' +
+                '<span class="cs">Team dmg share <b>' + f1(p.teamDmgShare) + '%</b></span>' +
+                '<span class="cs">Team taken share <b>' + f1(p.teamTakenShare) + '%</b></span>' +
                 '<span class="cs">KP <b>' + f1(p.kp) + '%</b></span>' +
                 '<span class="cs">Deaths <b>' + f2(p.deaths) + '/g</b></span>' +
               '</div>' +
@@ -940,7 +942,6 @@
               '<span class="xs">Avg dmg <b>' + fmt(p.avgDmg) + '</b></span>' +
               '<span class="xs">Avg taken <b>' + fmt(p.avgTaken) + '</b></span>' +
               '<span class="xs">Dodges/min <b>' + f2(p.dodges) + '</b></span>' +
-              (typeof p.snowball === "number" ? '<span class="xs">Snowball hits/min <b>' + f2(p.snowball) + '</b></span>' : '') +
               '<span class="xs">Objectives <b>' + f2(p.objectives) + '/g</b></span>' +
               '<span class="xs">Late deaths <b>' + f1(p.lateDeaths) + '%</b></span>' +
               '<span class="xs">Close-game grade <b>' + f1(p.closeGrade) + '</b></span>' +
@@ -963,7 +964,7 @@
 
       // ---- Performance History (daily) ----
       // Append new date entries here on each refresh; dates must stay ascending.
-      var HISTORY = [{"date":"2026-11-01","players":{"I3i3oy":{"mpr":55.7,"mmr":1579},"CreamiNataella":{"mpr":54.2,"mmr":1559},"pikabUwU":{"mpr":50.3,"mmr":1504},"Ohwutahel":{"mpr":46.2,"mmr":1446},"Vincent Chan":{"mpr":57.3,"mmr":1603},"Mashbrains":{"mpr":36.8,"mmr":1315}}},{"date":"2026-11-02","players":{"I3i3oy":{"mpr":52.4,"mmr":1534},"CreamiNataella":{"mpr":52.9,"mmr":1541},"pikabUwU":{"mpr":49.0,"mmr":1486},"Ohwutahel":{"mpr":46.9,"mmr":1457},"Vincent Chan":{"mpr":57.1,"mmr":1599},"Mashbrains":{"mpr":37.4,"mmr":1323}}},{"date":"2026-11-03","players":{"I3i3oy":{"mpr":52.4,"mmr":1534},"CreamiNataella":{"mpr":52.9,"mmr":1541},"pikabUwU":{"mpr":49.0,"mmr":1486},"Ohwutahel":{"mpr":46.9,"mmr":1457},"Vincent Chan":{"mpr":57.1,"mmr":1599},"Mashbrains":{"mpr":37.4,"mmr":1323}}},{"date":"2026-11-04","players":{"I3i3oy":{"mpr":54.5,"mmr":1563},"CreamiNataella":{"mpr":54.5,"mmr":1563},"pikabUwU":{"mpr":48.0,"mmr":1473},"Ohwutahel":{"mpr":47.3,"mmr":1462},"Vincent Chan":{"mpr":56.8,"mmr":1595},"Mashbrains":{"mpr":37.4,"mmr":1324}}}];
+      var HISTORY = [{"date":"2026-11-01","players":{"I3i3oy":{"mpr":55.7,"mmr":1579},"CreamiNataella":{"mpr":54.2,"mmr":1559},"pikabUwU":{"mpr":50.3,"mmr":1504},"Ohwutahel":{"mpr":46.2,"mmr":1446},"Vincent Chan":{"mpr":57.3,"mmr":1603},"Mashbrains":{"mpr":36.8,"mmr":1315}}},{"date":"2026-11-02","players":{"I3i3oy":{"mpr":52.4,"mmr":1534},"CreamiNataella":{"mpr":52.9,"mmr":1541},"pikabUwU":{"mpr":49.0,"mmr":1486},"Ohwutahel":{"mpr":46.9,"mmr":1457},"Vincent Chan":{"mpr":57.1,"mmr":1599},"Mashbrains":{"mpr":37.4,"mmr":1323}}},{"date":"2026-11-03","players":{"I3i3oy":{"mpr":52.4,"mmr":1534},"CreamiNataella":{"mpr":52.9,"mmr":1541},"pikabUwU":{"mpr":49.0,"mmr":1486},"Ohwutahel":{"mpr":46.9,"mmr":1457},"Vincent Chan":{"mpr":57.1,"mmr":1599},"Mashbrains":{"mpr":37.4,"mmr":1323}}},{"date":"2026-11-04","players":{"I3i3oy":{"mpr":54.8,"mmr":1567},"CreamiNataella":{"mpr":54.4,"mmr":1561},"pikabUwU":{"mpr":47.9,"mmr":1470},"Ohwutahel":{"mpr":47.2,"mmr":1461},"Vincent Chan":{"mpr":56.7,"mmr":1594},"Mashbrains":{"mpr":36.8,"mmr":1315}}}];
 
       var CHART_PLAYERS = [
         { name: "Vincent Chan", cls: "c1" },
