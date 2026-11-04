@@ -335,6 +335,81 @@
       .augment-section { border-top: 1px solid var(--line); }
       .augment-note { font-size: 13px; color: var(--ink-3); margin: 6px 0 0; padding: 0 20px; line-height: 1.5; }
 
+      /* ---------- Team Playbook + When You Stack ---------- */
+      .playbook {
+        background: var(--header-bg); color: var(--header-ink);
+        border: 1px solid var(--header-bg); border-top: 4px solid var(--gold-bright);
+        border-radius: 12px; box-shadow: var(--shadow);
+        padding: 20px 22px 8px;
+      }
+      .playbook h2 { color: var(--header-ink); font-size: 26px; margin: 0 0 4px; }
+      .playbook .pb-sub { color: var(--header-ink-2); font-size: 14.5px; margin: 0 0 16px; max-width: 720px; }
+      .pb-rules { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; list-style: none; margin: 0; padding: 0; counter-reset: pb; }
+      .pb-rules li {
+        display: flex; gap: 12px; align-items: flex-start;
+        padding: 12px 0; border-top: 1px solid rgba(242,236,220,.16);
+        font-size: 15px; line-height: 1.5; color: var(--header-ink-2);
+      }
+      .pb-rules li .pb-num {
+        counter-increment: pb;
+        font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700;
+        color: var(--header-bg); background: var(--gold-bright);
+        width: 24px; height: 24px; border-radius: 50%; flex: none;
+        display: inline-flex; align-items: center; justify-content: center;
+        margin-top: 1px;
+      }
+      .pb-rules li .pb-num::before { content: counter(pb); }
+      .pb-rules li strong { color: var(--header-ink); font-weight: 700; }
+      .pb-rules li b { color: var(--gold-bright); font-weight: 700; font-family: "JetBrains Mono", monospace; font-size: 14px; }
+      .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+      .stack-card {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 10px; padding: 14px 16px 12px; box-shadow: var(--shadow);
+      }
+      .stack-card .sc-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin: 0 0 4px; }
+      .stack-card .sc-wr { font-family: "JetBrains Mono", monospace; font-size: 26px; font-weight: 700; line-height: 1.1; margin: 0; }
+      .stack-card .sc-wr small { font-size: 14px; font-weight: 500; color: var(--ink-3); }
+      .stack-card .sc-meta { font-size: 13.5px; color: var(--ink-2); margin: 3px 0 0; }
+      .stack-card .sc-meta b { font-family: "JetBrains Mono", monospace; color: var(--ink); font-size: 13.5px; }
+      .stack-card.best { border-top: 3px solid var(--teal); }
+      .stack-card.worst { border-top: 3px solid var(--red); }
+      .stack-note { color: var(--ink-3); font-size: 14px; margin: 12px 0 0; max-width: 820px; line-height: 1.55; }
+      .stack-note strong { color: var(--ink-2); }
+
+      /* ---------- Role / stack split lines (player cards) ---------- */
+      .split-lines { margin-top: 10px; display: grid; gap: 6px; }
+      .split-line {
+        font-size: 14px; color: var(--ink-2); line-height: 1.5;
+        background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+        padding: 8px 12px;
+      }
+      .split-line .sl-label { font-weight: 700; color: var(--ink); white-space: nowrap; }
+      .split-line b { font-family: "JetBrains Mono", monospace; color: var(--ink); font-size: 13.5px; font-weight: 700; }
+      .split-line .sl-delta { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 13px; white-space: nowrap; }
+      .split-line .sl-delta.up { color: var(--teal); }
+      .split-line .sl-delta.down { color: var(--red); }
+
+      /* ---------- Augment cheat-sheet (player cards) ---------- */
+      .cheat-section { border-top: 1px solid var(--line); }
+      .cheat-note { font-size: 13px; color: var(--ink-3); margin: 6px 0 0; padding: 0 20px; line-height: 1.5; }
+      .cheat-grid { display: grid; grid-template-columns: 1fr 1fr; }
+      .cheat-block { padding: 12px 20px 16px; }
+      .cheat-block .cheat-champ { font-weight: 700; color: var(--ink); font-size: 16px; margin: 0 0 5px; }
+      .cheat-line { font-size: 14.5px; color: var(--ink-2); line-height: 1.55; margin: 0 0 4px; }
+      .cheat-line:last-child { margin-bottom: 0; }
+      .cheat-line .cl-label { font-weight: 700; white-space: nowrap; }
+      .cheat-line.take .cl-label { color: var(--teal); }
+      .cheat-line.avoid .cl-label { color: var(--red); }
+      .cheat-line b { font-family: "JetBrains Mono", monospace; color: var(--ink); font-size: 13.5px; font-weight: 700; white-space: nowrap; }
+      .cheat-line .cd { font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700; white-space: nowrap; }
+      .cheat-line .cd.up { color: var(--teal); }
+      .cheat-line .cd.down { color: var(--red); }
+      @media (max-width: 820px) {
+        .pb-rules { grid-template-columns: 1fr; }
+        .stack-grid { grid-template-columns: 1fr 1fr; }
+        .cheat-grid { grid-template-columns: 1fr; }
+      }
+
       .card-extra {
         border-top: 1px solid var(--line); background: var(--surface-2);
         padding: 12px 20px 14px;
@@ -626,6 +701,51 @@
         <p class="history-note">History is tracked under the per-player last-50 definition — each day's refresh adds a point, so the lines grow over time. Both charts zoom their Y-axis to the range the data actually covers, re-derived from the history on every refresh, so players sitting a point or two apart don't draw on top of each other.</p>
       </section>
 
+      <section aria-labelledby="playbook-h">
+        <div class="playbook">
+          <h2 id="playbook-h">Team Playbook — standing rules</h2>
+          <p class="pb-sub">Six rules the numbers have already produced — the two-minute pre-game briefing. Read them before queueing; the detail behind each one is on the player cards below.</p>
+          <ol class="pb-rules">
+            <li><span class="pb-num" aria-hidden="true"></span><span><strong>Feed the pocket picks.</strong> Bench priority from the group’s own grades: I3i3oy takes Varus and Ahri; pikabUwU always takes Cassiopeia (<b>3-0</b>, grades <b>+17.6</b>) and Hwei; Ohwutahel is green-lit on Trundle, Taric and Zyra; Vincent Chan takes Senna; Mashbrains gets Garen-type bruisers; CreamiNataella swaps Braum away; Vincent Chan swaps Shaco away.</span></li>
+            <li><span class="pb-num" aria-hidden="true"></span><span><strong>Keep Ohwutahel on the frontline.</strong> His Damage games grade <b>42.5</b> (<b>−6.0</b> vs his average); his Frontline games grade <b>51.7</b> (<b>+3.1</b>). If he is holding a damage carry and a tank is on the bench, swap.</span></li>
+            <li><span class="pb-num" aria-hidden="true"></span><span><strong>Break the shared augment habits.</strong> The group’s repeat trap augments — Ultimate Recursion, Skilled Sniper, Pursuit of Haste, Divine Intervention — all win at most <b>47.2%</b> population-wide. Offered next to anything neutral, take the other one. Champion-specific calls are in each card’s cheat-sheet (e.g. never Ravenous Bind on Trundle, <b>−6.3</b>).</span></li>
+            <li><span class="pb-num" aria-hidden="true"></span><span><strong>Two lost fights = peel mode.</strong> After two lost fights in a row, stop starting fights: frontline stands on the carries and counter-engages. Ohwutahel grades <b>40.4</b> in losses but <b>50.7</b> in close games — the snowball is the killer, not the close ones.</span></li>
+            <li><span class="pb-num" aria-hidden="true"></span><span><strong>CreamiNataella stays on the turret.</strong> After won fights she hits the structure instead of drifting back — her <b>15.8%</b> share of team structure takedowns is the group’s lowest, and team conversion is the payoff.</span></li>
+            <li><span class="pb-num" aria-hidden="true"></span><span><strong>Ahead after 15 minutes? Group and close.</strong> <b>28.9%</b> of Vincent Chan’s deaths come in the last quarter of games, the group’s highest rate, and late deaths carry the longest timers. With a late lead, nobody takes solo fights.</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <section aria-labelledby="stack-h">
+        <div class="section-head">
+          <h2 id="stack-h">When You Stack</h2>
+          <p class="section-note">How the group performs by how many of the six are in the game together — a supplementary lens. The scoring definition (each player’s own last 50 games) is unchanged.</p>
+        </div>
+        <div class="stack-grid">
+          <div class="stack-card worst">
+            <p class="sc-label">Solo</p>
+            <p class="sc-wr">44.4% <small>win rate</small></p>
+            <p class="sc-meta">Grade <b>42.9</b> · <b>63</b> player-games</p>
+          </div>
+          <div class="stack-card best">
+            <p class="sc-label">2–3 of the group</p>
+            <p class="sc-wr">61.6% <small>win rate</small></p>
+            <p class="sc-meta">Grade <b>54.5</b> · <b>73</b> player-games</p>
+          </div>
+          <div class="stack-card">
+            <p class="sc-label">4 of the group</p>
+            <p class="sc-wr">58.5% <small>win rate</small></p>
+            <p class="sc-meta">Grade <b>53.4</b> · <b>65</b> player-games</p>
+          </div>
+          <div class="stack-card">
+            <p class="sc-label">Full stack (5)</p>
+            <p class="sc-wr">45.5% <small>win rate</small></p>
+            <p class="sc-meta">Grade <b>50.2</b> · <b>99</b> player-games</p>
+          </div>
+        </div>
+        <p class="stack-note">Small stacks are where this group plays its best — <strong>61.6% wins and a 54.5 grade with 2–3 of you in</strong>, well clear of solo queue (44.4%, 42.9). Counts are <strong>player-games</strong> (a stack game counts once for each member in it); the full-stack dip likely partly reflects facing other premades — treat it as context, not a grade.</p>
+      </section>
+
       <section aria-labelledby="players-h">
         <div class="section-head">
           <h2 id="players-h">Player by Player</h2>
@@ -660,6 +780,9 @@
           <p>Each player card's <strong>Champion focus</strong> block compares the player's mean game grade on each champion they have played at least 3 times against their own overall mean grade. Champions grading 4 or more points above that average go on the <strong>Take when offered</strong> list; champions 4 or more points below go on <strong>Pass or swap away</strong> — in ARAM champions are dealt, so this is guidance for bench decisions, not a pick order. Samples are small (3–8 games per champion here), so treat it as directional draft guidance, not a verdict.</p>
           <h3>Population baselines</h3>
           <p>Each card's <strong>expected record</strong> sums the champion population win rate for every game that player was dealt — if the champions they received win 48.7% of the time population-wide, a 50-game set is expected to go about 24–26 — and the card shows how many wins they finished above or below that expectation. The champion population win rates shown in Champion focus, and the <strong>Augment checks</strong> lists, come from <strong>MayhemMeta</strong> (mayhemmeta.com), snapshot fetched Nov 4, 2026 on the current patch. <strong>Trap picks</strong> are augments the player took 3 or more times whose population win rate is at most 48%; <strong>Proven picks</strong> are augments taken 3 or more times at 52.5% or better — augment rates rest on large samples (tens of thousands of games per augment). A champion can grade well for a player while being weak population-wide (a genuine pocket pick), or the reverse. MayhemMeta does not document where its data comes from and its champion table publishes no game counts, so these baselines are directional context only — they are <strong>not</strong> part of the Performance Score.</p>
+          <h3>Augment cheat-sheets, role splits, stack splits &amp; solo deaths</h3>
+          <p>Each card's <strong>Augment cheat-sheet</strong> comes from the <strong>MayhemMeta champion pages</strong>: for each of the player's most-played champions, the best augments are those with at least 100 games on that champion, shown with their win rate on that champion and the delta against that champion's base win rate; the “avoid” line lists popular augments (taken often) that sit below the champion's base rate. Snapshot fetched Nov 4, 2026, on the current patch — directional context like the other population baselines, and not part of the Performance Score.</p>
+          <p>The <strong>By role</strong> line is the player's mean game grade split by the champion archetype they actually played in each game (Damage / Frontline / Support), with the delta against their own overall mean grade; archetypes with fewer than 3 games are omitted. The <strong>With the group</strong> line splits the same 50 games by how many of the six group members were in the game, counted from shared match IDs (Solo / 2–3 / 4 / Full stack of 5) — it is a supplementary lens only and does not change the scoring definition. <strong>Solo deaths</strong> are deaths with no other kill within 10 seconds either way in the match timeline — ARAM averages a kill roughly every 25 seconds, so that tight window is what makes “alone” meaningful; the card shows them as a share of the player's total deaths, with the count.</p>
           <h3>What isn't measured</h3>
           <p>PlayARAM does not publish healing, shielding, crowd-control score or per-player objective damage, so support utility is approximated by assists, participation and damage taken — enchanter-heavy players (notably pikabUwU) are likely understated. Ratings cluster in the 40s–50s because every criterion is a percentile grade against the same archetype pool.</p>
         </div>
@@ -853,6 +976,87 @@
             evidence: "None of your repeat augments is above-average population-wide, and three are outright traps: Pandora's Box (47.0%, taken 3 times), Thread the Needle (47.2%, 4 times), Bread and Cheese (47.4%, 3 times). You also finished 4.0 wins below expectation on the easiest champion schedule in the group — the deals are not the problem.",
             fix: "At draft, if any offered augment is a known strong one, take it over your usual defaults. Your current habits cost you a few percent of win rate in game after game." }
         ]
+      };
+
+      // ---- Augment cheat-sheets (MayhemMeta champion pages, 100+ games per
+      // augment, snapshot Nov 4, 2026): win rate on that champion + delta vs
+      // the champion's base rate. Up to 4 champions per player.
+      function cheatAug(name, wr, delta) { return { name: name, wr: wr, delta: delta }; }
+      var CHEAT_SHEETS = {
+        "Vincent Chan": [
+          { champ: "Senna", best: [cheatAug("Stackosaurus Rex", 57.27, 9.68), cheatAug("Windspeaker's Blessing", 55.47, 5.19), cheatAug("Hand of Baron", 54.88, 3.8)], traps: [cheatAug("Upgrade Infinity Edge", 44.51, -3.32), cheatAug("Big Shot", 44.67, -3.01)] },
+          { champ: "Brand", best: [cheatAug("Infernal Conduit", 53.79, 7.41), cheatAug("Blue Barrier", 53.0, 4.97), cheatAug("Mad Scientist", 52.93, 4.7)], traps: [cheatAug("Take'em Down Down Down", 45.97, -1.77), cheatAug("Jeweled Gauntlet", 45.96, -1.73)] },
+          { champ: "Shaco", best: [cheatAug("Hand of Baron", 57.87, 5.34), cheatAug("Infinite Recursion", 55.6, 6.58), cheatAug("Eureka", 55.59, 6.88)], traps: [cheatAug("Upgrade Infinity Edge", 43.19, -5.39), cheatAug("Nightstalking", 45.29, -3.25)] }
+        ],
+        "I3i3oy": [
+          { champ: "Vayne", best: [cheatAug("Draw Your Sword", 58.76, 5.95), cheatAug("Dual Wield", 58.61, 8.22), cheatAug("Weapon of Destiny", 56.71, 4.41)], traps: [cheatAug("Lil' Extra Help", 49.92, -1.55), cheatAug("Critical Rhythm", 50.67, -0.71)] },
+          { champ: "Ahri", best: [cheatAug("Back To Basics", 60.94, 4.15), cheatAug("En Passant", 60.69, 3.45), cheatAug("Stats on Stats on Stats!", 58.59, 3.26)], traps: [cheatAug("CRIMSON COBALT", 49.18, -3.41), cheatAug("Witchful Thinking", 51.47, -1.07)] },
+          { champ: "Akshan", best: [cheatAug("Omni Soul", 58.9, 5.66), cheatAug("Don't Blink", 55.73, 4.28), cheatAug("Poltergeist", 54.39, 2.28)], traps: [cheatAug("Big Shot", 46.57, -1.63), cheatAug("Critical Rhythm", 47.07, -1.11)] },
+          { champ: "Varus", best: [cheatAug("Draw Your Sword", 59.26, 9.44), cheatAug("Hand of Baron", 57.09, 4.71), cheatAug("BEES!!!", 56.42, 8.5)], traps: [cheatAug("CRIMSON COBALT", 45.06, -3.71), cheatAug("Skilled Sniper", 45.72, -3.03)] }
+        ],
+        "CreamiNataella": [
+          { champ: "Miss Fortune", best: [cheatAug("Apex Inventor", 62.41, 5.18), cheatAug("Totentanz", 60.11, 5.03), cheatAug("Draw Your Sword", 59.46, 7.98)], traps: [cheatAug("Big Shot", 46.11, -3.41), cheatAug("CRIMSON COBALT", 47.08, -2.42)] },
+          { champ: "Malphite", best: [cheatAug("Armored Impact", 53.44, 6.51), cheatAug("Mad Scientist", 53.36, 5.28), cheatAug("Pressure Cooker", 52.52, 4.71)], traps: [cheatAug("Ultimate Recursion", 44.47, -2.93), cheatAug("Jeweled Gauntlet", 44.77, -2.36)] },
+          { champ: "Braum", best: [cheatAug("Blade Waltz", 55.74, 3.3), cheatAug("BEES!!!", 54.05, 4.85), cheatAug("Ultimate Revolution", 52.98, 3.78)], traps: [cheatAug("CRIMSON COBALT", 45.4, -1.53), cheatAug("Celestial Body", 46.32, -0.8)] }
+        ],
+        "pikabUwU": [
+          { champ: "Hwei", best: [cheatAug("Hand of Baron", 60.92, 5.61), cheatAug("Weapon of Destiny", 58.84, 4.97), cheatAug("With Haste", 57.14, 5.14)], traps: [cheatAug("Witchful Thinking", 50.38, -0.71), cheatAug("Jeweled Gauntlet", 50.46, -0.65)] },
+          { champ: "Cassiopeia", best: [cheatAug("Blue Barrier", 58.57, 9.65), cheatAug("Hand of Baron", 54.78, 3.03), cheatAug("Escape Plan", 54.24, 3.66)], traps: [cheatAug("Siphon", 45.52, -1.0), cheatAug("Take'em Down Down Down", 46.14, -0.38)] },
+          { champ: "Ahri", best: [cheatAug("Back To Basics", 60.94, 4.15), cheatAug("En Passant", 60.69, 3.45), cheatAug("Stats on Stats on Stats!", 58.59, 3.26)], traps: [cheatAug("CRIMSON COBALT", 49.18, -3.41), cheatAug("Witchful Thinking", 51.47, -1.07)] },
+          { champ: "Lux", best: [cheatAug("Back To Basics", 54.72, 2.56), cheatAug("Arcane Axiom", 52.63, 2.29), cheatAug("Hand of Baron", 52.2, 3.3)], traps: [cheatAug("Magic Missile", 44.88, -2.71), cheatAug("Skilled Sniper", 45.17, -2.3)] }
+        ],
+        "Ohwutahel": [
+          { champ: "Trundle", best: [cheatAug("The Boom and the Bass", 61.81, 7.25), cheatAug("Ultra Hydra", 61.0, 6.48), cheatAug("Twin Fire", 59.74, 2.76)], traps: [cheatAug("Ravenous Bind", 46.6, -6.28), cheatAug("Siphon", 52.08, -1.28)] },
+          { champ: "Zyra", best: [cheatAug("Giant Slayer", 56.52, 5.35), cheatAug("Mad Scientist", 55.85, 4.92), cheatAug("Homeguard", 55.75, 5.59)], traps: [cheatAug("Take'em Down Down Down", 45.51, -4.24), cheatAug("Magic Missile", 48.76, -1.07)] },
+          { champ: "Taric", best: [cheatAug("Infinite Recursion", 64.36, 6.47), cheatAug("Apex Inventor", 60.47, 3.49), cheatAug("Wee Woo Wee Woo", 58.0, 4.73)], traps: [cheatAug("First-Aid Kit", 49.65, -1.82), cheatAug("Rejuvenation", 50.79, -0.82)] },
+          { champ: "Sion", best: [cheatAug("Twin Fire", 58.78, 3.13), cheatAug("Steel Your Heart", 58.6, 8.37), cheatAug("Infinite Recursion", 57.41, 4.03)], traps: [cheatAug("Titan's Resolve", 48.02, -2.78), cheatAug("Dive Bomber", 48.21, -2.67)] }
+        ],
+        "Mashbrains": [
+          { champ: "Garen", best: [cheatAug("Back To Basics", 55.96, 5.34), cheatAug("Upgrade Immolate", 54.97, 3.76), cheatAug("Sap Magic", 52.76, 3.93)], traps: [cheatAug("Big Shot", 43.21, -3.45), cheatAug("Upgrade Infinity Edge", 45.42, -1.45)] },
+          { champ: "Jinx", best: [cheatAug("Weapon of Destiny", 56.28, 4.51), cheatAug("Mad Scientist", 55.98, 4.25), cheatAug("Totentanz", 55.79, 3.1)], traps: [cheatAug("Jeweled Bracelet", 49.38, -1.66), cheatAug("Deft", 50.85, -0.04)] },
+          { champ: "Master Yi", best: [cheatAug("Ultra Hydra", 70.44, 11.4), cheatAug("Clown College", 66.9, 8.03), cheatAug("Weapon of Destiny", 65.76, 5.65)], traps: [cheatAug("Upgrade Infinity Edge", 55.72, -2.24), cheatAug("Critical Rhythm", 56.16, -1.77)] },
+          { champ: "Ekko", best: [cheatAug("BEES!!!", 63.21, 7.59), cheatAug("Ethereal Weapon", 62.2, 6.96), cheatAug("Wooglet's Witchcap", 60.85, 4.67)], traps: [cheatAug("Jeweled Gauntlet", 53.27, -2.48), cheatAug("CRIMSON COBALT", 54.05, -1.75)] }
+        ]
+      };
+
+      // ---- Role splits: mean grade by archetype played (grade, games,
+      // delta vs the player's own average). Only archetypes with 3+ games.
+      var ARCH_ORDER = ["Damage", "Frontline", "Support"];
+      var ARCH_SPLITS = {
+        "Vincent Chan": { "Damage": { grade: 59.0, games: 39, delta: 1.4 }, "Frontline": { grade: 53.6, games: 8, delta: -4.0 }, "Support": { grade: 50.4, games: 3, delta: -7.3 } },
+        "I3i3oy": { "Damage": { grade: 55.7, games: 41, delta: 0.5 }, "Frontline": { grade: 52.8, games: 9, delta: -2.4 } },
+        "CreamiNataella": { "Damage": { grade: 55.7, games: 27, delta: 0.1 }, "Frontline": { grade: 54.8, games: 8, delta: -0.9 }, "Support": { grade: 56.1, games: 15, delta: 0.4 } },
+        "pikabUwU": { "Damage": { grade: 49.2, games: 32, delta: 1.2 }, "Frontline": { grade: 47.3, games: 6, delta: -0.8 }, "Support": { grade: 45.4, games: 12, delta: -2.7 } },
+        "Ohwutahel": { "Damage": { grade: 42.5, games: 15, delta: -6.0 }, "Frontline": { grade: 51.7, games: 28, delta: 3.1 }, "Support": { grade: 48.9, games: 7, delta: 0.4 } },
+        "Mashbrains": { "Damage": { grade: 35.6, games: 37, delta: -1.8 }, "Frontline": { grade: 42.6, games: 13, delta: 5.2 } }
+      };
+
+      // ---- Stack splits: win rate + games by how many of the six were in
+      // the game (from shared match IDs). Supplementary lens only.
+      var STACK_ORDER = [
+        { key: "solo", label: "Solo" },
+        { key: "small", label: "2–3 of the group" },
+        { key: "four", label: "4 of the group" },
+        { key: "full", label: "Full stack (5)" }
+      ];
+      var STACK_SPLITS = {
+        "Vincent Chan": { solo: { winrate: 57.1, games: 7 }, small: { winrate: 71.4, games: 7 }, four: { winrate: 54.5, games: 11 }, full: { winrate: 52.0, games: 25 } },
+        "I3i3oy": { solo: { winrate: 60.0, games: 5 }, small: { winrate: 66.7, games: 18 }, four: { winrate: 63.6, games: 11 }, full: { winrate: 37.5, games: 16 } },
+        "CreamiNataella": { small: { winrate: 58.8, games: 17 }, four: { winrate: 60.0, games: 15 }, full: { winrate: 44.4, games: 18 } },
+        "pikabUwU": { solo: { winrate: 50.0, games: 4 }, small: { winrate: 77.8, games: 9 }, four: { winrate: 52.9, games: 17 }, full: { winrate: 45.0, games: 20 } },
+        "Ohwutahel": { solo: { winrate: 0.0, games: 5 }, small: { winrate: 50.0, games: 22 }, four: { winrate: 60.0, games: 10 }, full: { winrate: 53.8, games: 13 } },
+        "Mashbrains": { solo: { winrate: 45.2, games: 42 }, four: { winrate: 100.0, games: 1 }, full: { winrate: 28.6, games: 7 } }
+      };
+
+      // ---- Solo deaths: share of deaths with no other kill within 10s
+      // either way, with the raw count.
+      var SOLO_DEATHS = {
+        "Vincent Chan": { share: 5.9, count: 29 },
+        "I3i3oy": { share: 6.2, count: 28 },
+        "CreamiNataella": { share: 5.3, count: 22 },
+        "pikabUwU": { share: 5.2, count: 22 },
+        "Ohwutahel": { share: 6.3, count: 36 },
+        "Mashbrains": { share: 5.9, count: 25 }
       };
 
       function fmt(n) { return n.toLocaleString("en-US"); }
@@ -1092,6 +1296,54 @@
         return html + "</ul>";
       }
 
+      function fmtSigned1(n) { return (n < 0 ? "\u2212" : "+") + Math.abs(n).toFixed(1); }
+
+      function roleSplitHTML(p) {
+        var splits = ARCH_SPLITS[p.name];
+        if (!splits) return "";
+        var parts = [];
+        ARCH_ORDER.forEach(function (arch) {
+          var s = splits[arch];
+          if (!s || s.games < 3) return;
+          parts.push(arch + ' <b>' + f1(s.grade) + '</b> (' + s.games + ' games, <span class="sl-delta ' + (s.delta >= 0 ? "up" : "down") + '">' + fmtSigned1(s.delta) + "</span>)");
+        });
+        if (!parts.length) return "";
+        return '<div class="split-line"><span class="sl-label">By role:</span> ' + parts.join(" · ") + "</div>";
+      }
+
+      function stackSplitHTML(p) {
+        var splits = STACK_SPLITS[p.name];
+        if (!splits) return "";
+        var parts = [];
+        STACK_ORDER.forEach(function (bucket) {
+          var s = splits[bucket.key];
+          if (!s) return;
+          parts.push(bucket.label + ' <b>' + f1(s.winrate) + "%</b> (" + s.games + ")");
+        });
+        if (!parts.length) return "";
+        return '<div class="split-line"><span class="sl-label">With the group:</span> ' + parts.join(" · ") + "</div>";
+      }
+
+      function cheatAugHTML(a) {
+        return a.name + ' <b>' + f1(a.wr) + '%</b> <span class="cd ' + (a.delta >= 0 ? "up" : "down") + '">(' + fmtSigned1(a.delta) + ")</span>";
+      }
+
+      function cheatSheetHTML(p) {
+        var cheats = CHEAT_SHEETS[p.name];
+        if (!cheats || !cheats.length) return "";
+        var blocks = "";
+        cheats.forEach(function (c) {
+          blocks += '<div class="cheat-block"><p class="cheat-champ">' + c.champ + '</p>' +
+            '<p class="cheat-line take"><span class="cl-label">Take:</span> ' + c.best.map(cheatAugHTML).join(" · ") + "</p>" +
+            (c.traps && c.traps.length ? '<p class="cheat-line avoid"><span class="cl-label">Avoid — popular but weak here:</span> ' + c.traps.map(cheatAugHTML).join(" · ") + "</p>" : "") +
+            "</div>";
+        });
+        return '<div class="cheat-section">' +
+          '<h4 class="champ-head">Augment cheat-sheet</h4>' +
+          '<p class="cheat-note">Best and worst augments on each champion from MayhemMeta champion pages (100+ games per augment, snapshot Nov 4, 2026). Win rate on that champion, with the delta vs the champion’s base rate in brackets.</p>' +
+          '<div class="cheat-grid">' + blocks + "</div></div>";
+      }
+
       function renderCards() {
         var wrap = document.getElementById("player-cards");
         PLAYERS.forEach(function (p, i) {
@@ -1112,8 +1364,10 @@
                 '<span class="cs">Team taken share <b>' + f1(p.teamTakenShare) + '%</b></span>' +
                 '<span class="cs">KP <b>' + f1(p.kp) + '%</b></span>' +
                 '<span class="cs">Deaths <b>' + f2(p.deaths) + '/g</b></span>' +
+                (SOLO_DEATHS[p.name] ? '<span class="cs">Solo deaths <b>' + f1(SOLO_DEATHS[p.name].share) + '% (' + SOLO_DEATHS[p.name].count + ')</b></span>' : '') +
               '</div>' +
               expectLineHTML(p) +
+              '<div class="split-lines">' + roleSplitHTML(p) + stackSplitHTML(p) + '</div>' +
             '</div>' +
             '<div class="radar-section">' +
               '<div class="radar-head"><p class="radar-title">Criteria radar — vs group average</p>' +
@@ -1133,6 +1387,7 @@
                 '<div class="col fix"><h4><span class="mark" aria-hidden="true">!</span>Pass or swap away</h4>' + champListHTML(p.champFocus ? p.champFocus.drop : null, "No repeat champion grades well below your average \u2014 the leaks are on one-off picks.", "down") + '</div>' +
               '</div>' +
             '</div>' +
+            cheatSheetHTML(p) +
             '<div class="augment-section">' +
               '<h4 class="champ-head">Augment checks</h4>' +
               '<p class="augment-note">Population win rates from MayhemMeta (snapshot Nov 4, 2026), from tens of thousands of games per augment — how the pick does for everyone, not just in this group.</p>' +
