@@ -297,6 +297,39 @@
       .col ol.top-list li:last-child { margin-bottom: 0; }
       .col ol.top-list li::marker { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink); }
       .col .card-note { margin-top: 12px; font-size: 13.5px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 10px; }
+      /* ---------- Champion focus (player cards) ---------- */
+      .champ-section { border-top: 1px solid var(--line); }
+      .champ-head {
+        font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+        color: var(--ink-2); margin: 0; padding: 16px 20px 0;
+      }
+      .champ-cols { display: grid; grid-template-columns: 1fr 1fr; }
+      .champ-list { list-style: none; margin: 0; padding: 0; }
+      .champ-list li { margin-bottom: 9px; font-size: 15px; line-height: 1.45; }
+      .champ-list li:last-child { margin-bottom: 0; }
+      .champ-name { font-weight: 700; color: var(--ink); }
+      .champ-meta { color: var(--ink-2); }
+      .champ-meta b { font-family: "JetBrains Mono", monospace; color: var(--ink); font-size: 14.5px; }
+      .champ-delta { font-family: "JetBrains Mono", monospace; font-size: 14px; font-weight: 700; white-space: nowrap; }
+      .champ-delta.up { color: var(--teal); }
+      .champ-delta.down { color: var(--red); }
+      .champ-empty { margin: 0; font-size: 14.5px; color: var(--ink-3); line-height: 1.5; }
+      .champ-pop { white-space: nowrap; }
+      .champ-pop b { font-family: "JetBrains Mono", monospace; color: var(--ink); font-size: 14.5px; }
+
+      /* ---------- Expected record + Augment checks (player cards) ---------- */
+      .expect-line {
+        margin-top: 10px; padding: 9px 12px;
+        background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+        font-size: 14px; color: var(--ink-2); line-height: 1.5;
+      }
+      .expect-line b { font-family: "JetBrains Mono", monospace; color: var(--ink); font-size: 14px; font-weight: 700; }
+      .expect-delta { font-family: "JetBrains Mono", monospace; font-weight: 700; white-space: nowrap; }
+      .expect-delta.up { color: var(--teal); }
+      .expect-delta.down { color: var(--red); }
+      .augment-section { border-top: 1px solid var(--line); }
+      .augment-note { font-size: 13px; color: var(--ink-3); margin: 6px 0 0; padding: 0 20px; line-height: 1.5; }
+
       .card-extra {
         border-top: 1px solid var(--line); background: var(--surface-2);
         padding: 12px 20px 14px;
@@ -427,6 +460,7 @@
         .highlights { grid-template-columns: 1fr 1fr; }
         .cards { grid-template-columns: 1fr; }
         .card-body { grid-template-columns: 1fr; }
+        .champ-cols { grid-template-columns: 1fr; }
         .col + .col { border-left: 0; border-top: 1px solid var(--line); }
 
         /* Tables become stacked rows */
@@ -617,6 +651,10 @@
           <p class="formula">Performance Score (Mayhem Performance Rating) = 55% mean game grade + 20% median grade + 10% floor (25th percentile) grade + 15% win rate</p>
           <p class="formula">MMR-style = 800 + Performance Score × 14 &nbsp;—&nbsp; 1500 is a roughly average performance</p>
           <p>The median and floor terms are the consistency check: a player whose worst games crater scores lower than one with the same average and a higher floor.</p>
+          <h3>Champion focus</h3>
+          <p>Each player card's <strong>Champion focus</strong> block compares the player's mean game grade on each champion they have played at least 3 times against their own overall mean grade. Champions grading 4 or more points above that average go on the <strong>Take when offered</strong> list; champions 4 or more points below go on <strong>Pass or swap away</strong> — in ARAM champions are dealt, so this is guidance for bench decisions, not a pick order. Samples are small (3–8 games per champion here), so treat it as directional draft guidance, not a verdict.</p>
+          <h3>Population baselines</h3>
+          <p>Each card's <strong>expected record</strong> sums the champion population win rate for every game that player was dealt — if the champions they received win 48.7% of the time population-wide, a 50-game set is expected to go about 24–26 — and the card shows how many wins they finished above or below that expectation. The champion population win rates shown in Champion focus, and the <strong>Augment checks</strong> lists, come from <strong>MayhemMeta</strong> (mayhemmeta.com), snapshot fetched Nov 4, 2026 on the current patch. <strong>Trap picks</strong> are augments the player took 3 or more times whose population win rate is at most 48%; <strong>Proven picks</strong> are augments taken 3 or more times at 52.5% or better — augment rates rest on large samples (tens of thousands of games per augment). A champion can grade well for a player while being weak population-wide (a genuine pocket pick), or the reverse. MayhemMeta does not document where its data comes from and its champion table publishes no game counts, so these baselines are directional context only — they are <strong>not</strong> part of the Performance Score.</p>
           <h3>What isn't measured</h3>
           <p>PlayARAM does not publish healing, shielding, crowd-control score or per-player objective damage, so support utility is approximated by assists, participation and damage taken — enchanter-heavy players (notably pikabUwU) are likely understated. Ratings cluster in the 40s–50s because every criterion is a percentile grade against the same archetype pool.</p>
         </div>
@@ -646,6 +684,13 @@
           subs: { output: 65.9, kdaEff: 57.7, teamplay: 64.3, death: 45.4, conversion: 48.5, augments: 58.7, mechanics: 45.0 },
           avgDmg: 44062, avgTaken: 35108, dodges: 2.78, teamDmgShare: 24.5, teamTakenShare: 17.8, objectives: 0.74, lateDeaths: 28.9, closeGrade: 56.3, lossGrade: 54.8,
           consMean: 57.7, consMedian: 59.1, consFloor: 47.9,
+          champFocus: {
+            spam: [ { champ: "Senna", games: 4, w: 2, l: 2, grade: 72.2, delta: 14.5, popWr: 47.56 } ],
+            drop: [ { champ: "Shaco", games: 3, w: 2, l: 1, grade: 45.9, delta: -11.7, popWr: 48.36 } ]
+          },
+          expectation: { expWins: 24.3, expLosses: 25.7, winsAbove: 3.7, schedWr: 48.7, schedNote: "hardest in the group" },
+          trapPicks: [ { name: "Ultimate Recursion", popWr: 46.92, count: 3 }, { name: "Skilled Sniper", popWr: 47.02, count: 4 }, { name: "Pursuit of Haste", popWr: 47.15, count: 3 } ],
+          valuePicks: [ { name: "Blue Barrier", popWr: 52.92, count: 3 }, { name: "Armored Impact", popWr: 52.83, count: 3 }, { name: "Giant Slayer", popWr: 52.64, count: 3 } ],
           goodList: ["Group-best damage output \u2014 Output 65.9, 2,421 dmg/min and 21.9% of the group's total damage, plus a group-high 24.5% share of his own team's damage.", "Group-best Teamplay 64.3 with 75.0% kill participation \u2014 he is in nearly every fight.", "The group's most consistent player and its best in losses: floor grade 47.9 and a 54.8 average grade in losses, both group-best. Smolder posts a 6.17 KDA in 2 games; Senna a 5.20 KDA across 4 games."],
           fixList: ["Death quality 45.4, below the group average \u2014 and his 28.9% late-death share is the highest in the group, so too many deaths come at the worst time.", "Mechanics 45.0, below group average despite the top-end output \u2014 only 2.78 skillshots dodged per minute, the lowest in the group.", "Conversion only 48.5 \u2014 around the group average even with the group's biggest damage lead. Brand is 1-3 despite a 4.20 KDA."]
         },
@@ -655,6 +700,13 @@
           subs: { output: 61.2, kdaEff: 53.5, teamplay: 46.7, death: 52.6, conversion: 57.7, augments: 59.3, mechanics: 50.0 },
           avgDmg: 42597, avgTaken: 38132, dodges: 3.27, teamDmgShare: 23.8, teamTakenShare: 19.1, objectives: 1.26, lateDeaths: 26.9, closeGrade: 53.3, lossGrade: 45.8,
           consMean: 55.2, consMedian: 59.1, consFloor: 42.4,
+          champFocus: {
+            spam: [ { champ: "Varus", games: 3, w: 2, l: 1, grade: 76.8, delta: 21.6, popWr: 48.6 }, { champ: "Ahri", games: 6, w: 3, l: 3, grade: 67.2, delta: 12.1, popWr: 52.49 } ],
+            drop: [ { champ: "Vayne", games: 8, w: 7, l: 1, grade: 49.3, delta: -5.9, popWr: 51.31 } ]
+          },
+          expectation: { expWins: 25.2, expLosses: 24.8, winsAbove: 2.8, schedWr: 50.4, schedNote: "" },
+          trapPicks: [ { name: "Pursuit of Haste", popWr: 47.15, count: 3 } ],
+          valuePicks: [ { name: "Mad Scientist", popWr: 53.39, count: 3 }, { name: "Weapon of Destiny", popWr: 53.2, count: 5 }, { name: "Dual Wield", popWr: 52.94, count: 8 } ],
           goodList: ["Group-best Conversion 57.7 \u2014 nobody turns fights into structures better, taking a 29.3% share of his teams' structure takedowns.", "Output 61.2, second-best in the group, at 2,363 dmg/min and 23.8% of his own team's damage.", "Strong typical game \u2014 median grade 59.1 plus Augments 59.3; Vayne is a proven pocket pick at 7-1 across 8 games, and Akshan is 4-1 with a 5.52 KDA."],
           fixList: ["Teamplay 46.7 \u2014 67.2% kill participation is second-lowest in the group; too many fights happen without him.", "Big drop-off in losses: 45.8 average grade in losses versus 53.3 in close games.", "Mechanics 50.0 sits right at the group average \u2014 3.27 skillshots dodged per minute leaves room to grow for a carry."]
         },
@@ -664,6 +716,13 @@
           subs: { output: 52.7, kdaEff: 59.6, teamplay: 59.3, death: 57.5, conversion: 47.4, augments: 62.3, mechanics: 49.1 },
           avgDmg: 32425, avgTaken: 37953, dodges: 3.6, teamDmgShare: 17.8, teamTakenShare: 19.8, objectives: 0.52, lateDeaths: 25.3, closeGrade: 54.7, lossGrade: 50.7,
           consMean: 55.7, consMedian: 56.8, consFloor: 42.9,
+          champFocus: {
+            spam: [ { champ: "Miss Fortune", games: 3, w: 1, l: 2, grade: 63.2, delta: 7.5, popWr: 49.46 }, { champ: "Malphite", games: 3, w: 1, l: 2, grade: 60.2, delta: 4.6, popWr: 47.17 } ],
+            drop: [ { champ: "Braum", games: 3, w: 2, l: 1, grade: 50.3, delta: -5.4, popWr: 47.07 } ]
+          },
+          expectation: { expWins: 24.4, expLosses: 25.6, winsAbove: 2.6, schedWr: 48.8, schedNote: "" },
+          trapPicks: [ { name: "Ultimate Revolution", popWr: 46.71, count: 3 }, { name: "CRIMSON COBALT", popWr: 47.28, count: 4 } ],
+          valuePicks: [ { name: "Still Here", popWr: 53.42, count: 3 }, { name: "Weapon of Destiny", popWr: 53.2, count: 4 }, { name: "Blue Barrier", popWr: 52.92, count: 4 } ],
           goodList: ["Group-best KDA efficiency 59.6 \u2014 a 4.54 KDA with the group's highest kill participation (75.4%).", "Group-best Death quality 57.5 \u2014 the fewest deaths per game in the group (8.24).", "Group-best Augments 62.3 \u2014 consistently strong augment choices. Milio is 2-0 with an 11.67 KDA."],
           fixList: ["Conversion 47.4, the weakest in the group \u2014 advantages she helps create are not turning into structures; she takes only a 15.8% share of her teams' structure takedowns.", "Output 52.7 sits right at the group average, with the caveat that PlayARAM publishes no healing or shielding, so enchanter value is undercounted here.", "Two most-played picks are underwater: Malphite and Miss Fortune are both 1-2 in this window."],
           note: "Note: PlayARAM does not publish healing/shielding, so enchanter value is likely understated by this score."
@@ -674,6 +733,13 @@
           subs: { output: 40.5, kdaEff: 53.2, teamplay: 47.3, death: 53.2, conversion: 49.7, augments: 61.8, mechanics: 43.4 },
           avgDmg: 27309, avgTaken: 29478, dodges: 2.95, teamDmgShare: 16.1, teamTakenShare: 16.7, objectives: 0.68, lateDeaths: 25.9, closeGrade: 45.3, lossGrade: 38.7,
           consMean: 48.1, consMedian: 49.6, consFloor: 33.9,
+          champFocus: {
+            spam: [ { champ: "Cassiopeia", games: 3, w: 3, l: 0, grade: 65.7, delta: 17.6, popWr: 46.51 }, { champ: "Ahri", games: 3, w: 1, l: 2, grade: 56.4, delta: 8.3, popWr: 52.49 }, { champ: "Hwei", games: 5, w: 4, l: 1, grade: 55.9, delta: 7.9, popWr: 51.08 } ],
+            drop: []
+          },
+          expectation: { expWins: 24.6, expLosses: 25.4, winsAbove: 2.4, schedWr: 49.1, schedNote: "" },
+          trapPicks: [ { name: "Overloaded", popWr: 46.69, count: 3 }, { name: "Skilled Sniper", popWr: 47.02, count: 5 }, { name: "Divine Intervention", popWr: 47.13, count: 3 } ],
+          valuePicks: [ { name: "The Boom and the Bass", popWr: 53.55, count: 4 }, { name: "Weapon of Destiny", popWr: 53.2, count: 5 }, { name: "Sonata", popWr: 53.02, count: 3 } ],
           goodList: ["Augments 61.8, second-best in the group.", "Clean, efficient play \u2014 Death quality 53.2 and KDA efficiency 53.2, with only 8.46 deaths per game.", "Two undefeated pocket picks: Lux and Cassiopeia are both 3-0, and Hwei is 4-1 with a 5.45 KDA."],
           fixList: ["Output 40.5 \u2014 second-lowest in the group at 1,550 dmg/min and only 16.1% of his own team's damage.", "Mechanics 43.4 is the group's lowest, with only 2.95 skillshots dodged per minute.", "A low floor sinks him: Q1 grade of 33.9 and a 38.7 average grade in losses. Senna is 0-2."],
           note: "Note: PlayARAM does not publish healing/shielding, so enchanter value is likely understated by this score."
@@ -684,6 +750,13 @@
           subs: { output: 55.8, kdaEff: 36.6, teamplay: 52.6, death: 40.9, conversion: 48.2, augments: 56.7, mechanics: 57.3 },
           avgDmg: 33101, avgTaken: 54368, dodges: 5.29, teamDmgShare: 18.4, teamTakenShare: 28.1, objectives: 0.72, lateDeaths: 25.2, closeGrade: 50.7, lossGrade: 40.4,
           consMean: 48.5, consMedian: 49.2, consFloor: 34.5,
+          champFocus: {
+            spam: [ { champ: "Zyra", games: 3, w: 1, l: 2, grade: 68.5, delta: 20.0, popWr: 49.7 }, { champ: "Taric", games: 3, w: 3, l: 0, grade: 64.7, delta: 16.1, popWr: 51.63 }, { champ: "Trundle", games: 4, w: 1, l: 3, grade: 64.0, delta: 15.5, popWr: 53.43 } ],
+            drop: []
+          },
+          expectation: { expWins: 25.4, expLosses: 24.6, winsAbove: -1.4, schedWr: 50.7, schedNote: "" },
+          trapPicks: [ { name: "Ultimate Recursion", popWr: 46.92, count: 5 }, { name: "Divine Intervention", popWr: 47.13, count: 3 }, { name: "Ice Cold", popWr: 47.39, count: 5 } ],
+          valuePicks: [ { name: "Mad Scientist", popWr: 53.39, count: 4 }, { name: "Sonata", popWr: 53.02, count: 3 }, { name: "Armored Impact", popWr: 52.83, count: 9 } ],
           goodList: ["Real frontline output \u2014 Output 55.8 and 1,870 dmg/min while soaking a group-high 54,368 damage taken per game, a group-high 28.1% share of his teams' damage taken.", "Mechanics 57.3, the best in the group \u2014 his 5.29 skillshots dodged per minute is the group best by a wide margin.", "Perfect records on three frontline picks: Sion, Taric and Shen are all 3-0."],
           fixList: ["KDA efficiency 36.6 is the group's worst \u2014 11.36 deaths per game is also the group high.", "Death quality 40.9, the group's lowest: too many of those deaths give the fight away cheaply.", "Conversion 48.2 sits at the group average despite the frontline presence, and his most-played champion is his worst line: Trundle is 1-3 in this window."]
         },
@@ -693,6 +766,13 @@
           subs: { output: 23.9, kdaEff: 39.4, teamplay: 29.8, death: 50.4, conversion: 48.5, augments: 52.1, mechanics: 55.3 },
           avgDmg: 21493, avgTaken: 31229, dodges: 3.57, teamDmgShare: 14.1, teamTakenShare: 17.7, objectives: 0.76, lateDeaths: 27.9, closeGrade: 38.6, lossGrade: 36.4,
           consMean: 37.4, consMedian: 34.7, consFloor: 26.5,
+          champFocus: {
+            spam: [ { champ: "Garen", games: 6, w: 4, l: 2, grade: 44.3, delta: 6.9, popWr: 46.85 } ],
+            drop: []
+          },
+          expectation: { expWins: 26.0, expLosses: 24.0, winsAbove: -4.0, schedWr: 51.9, schedNote: "easiest in the group" },
+          trapPicks: [ { name: "Pandora's Box", popWr: 47.04, count: 3 }, { name: "Thread the Needle", popWr: 47.17, count: 4 }, { name: "Bread and Cheese", popWr: 47.42, count: 3 } ],
+          valuePicks: [],
           goodList: ["Mechanics 55.3, second-best in the group \u2014 the raw hands are there, at 3.57 skillshots dodged per minute.", "Death quality 50.4 is mid-pack, and Conversion 48.5 sits at the group average: the fights he is in do turn into progress.", "Garen (4-2) is a reliable pick, and Augments 52.1 sits at the group average."],
           fixList: ["Output 23.9 is the group's lowest by a wide margin \u2014 1,211 dmg/min and only 14.1% of his own team's damage, barely half the group leaders.", "Teamplay 29.8 is the group's lowest: 57.9% kill participation means he is missing from too many fights.", "KDA efficiency 39.4 and a group-worst 22-28 record; Ekko is 0-3 in this window."]
         }
@@ -905,6 +985,36 @@
         return svg;
       }
 
+      function fmtDelta(d) { return (d < 0 ? "\u2212" : "+") + Math.abs(d).toFixed(1); }
+
+      function champListHTML(list, emptyMsg, deltaCls) {
+        if (!list || !list.length) return '<p class="champ-empty">' + emptyMsg + "</p>";
+        var html = '<ul class="champ-list">';
+        list.forEach(function (c) {
+          var pop = (typeof c.popWr === "number") ? ' · <span class="champ-pop">pop. WR <b>' + f1(c.popWr) + "%</b></span>" : "";
+          html += '<li><span class="champ-name">' + c.champ + '</span> <span class="champ-meta">Grade <b>' + f1(c.grade) + '</b> · <span class="champ-delta ' + deltaCls + '">' + fmtDelta(c.delta) + " vs avg</span> · " + c.w + "-" + c.l + " · " + c.games + " games" + pop + "</span></li>";
+        });
+        return html + "</ul>";
+      }
+
+      function expectLineHTML(p) {
+        if (!p.expectation) return "";
+        var e = p.expectation;
+        var deltaCls = e.winsAbove >= 0 ? "up" : "down";
+        var deltaWord = e.winsAbove >= 0 ? "above expectation" : "below expectation";
+        var sched = ' · Schedule WR <b>' + f1(e.schedWr) + "%</b>" + (e.schedNote ? " — " + e.schedNote : "");
+        return '<div class="expect-line">Expected <b>' + f1(e.expWins) + "–" + f1(e.expLosses) + '</b> · <span class="expect-delta ' + deltaCls + '">' + fmtDelta(e.winsAbove) + " " + deltaWord + "</span>" + sched + "</div>";
+      }
+
+      function augmentListHTML(list, emptyMsg) {
+        if (!list || !list.length) return '<p class="champ-empty">' + emptyMsg + "</p>";
+        var html = '<ul class="champ-list">';
+        list.forEach(function (a) {
+          html += '<li><span class="champ-name">' + a.name + '</span> <span class="champ-meta">pop. WR <b>' + f1(a.popWr) + "%</b> · taken ×" + a.count + "</span></li>";
+        });
+        return html + "</ul>";
+      }
+
       function renderCards() {
         var wrap = document.getElementById("player-cards");
         PLAYERS.forEach(function (p, i) {
@@ -926,6 +1036,7 @@
                 '<span class="cs">KP <b>' + f1(p.kp) + '%</b></span>' +
                 '<span class="cs">Deaths <b>' + f2(p.deaths) + '/g</b></span>' +
               '</div>' +
+              expectLineHTML(p) +
             '</div>' +
             '<div class="radar-section">' +
               '<div class="radar-head"><p class="radar-title">Criteria radar — vs group average</p>' +
@@ -937,6 +1048,21 @@
             '<div class="card-body">' +
               '<div class="col good"><h4><span class="mark" aria-hidden="true">✓</span>Top 3 strengths</h4><ol class="top-list good-list"></ol></div>' +
               '<div class="col fix"><h4><span class="mark" aria-hidden="true">!</span>Top 3 to work on</h4><ol class="top-list fix-list"></ol><p class="card-note" style="display:none"></p></div>' +
+            '</div>' +
+            '<div class="champ-section">' +
+              '<h4 class="champ-head">Champion focus</h4>' +
+              '<div class="champ-cols">' +
+                '<div class="col good"><h4><span class="mark" aria-hidden="true">✓</span>Take when offered</h4>' + champListHTML(p.champFocus ? p.champFocus.spam : null, "No repeat champion grades well above your average yet.", "up") + '</div>' +
+                '<div class="col fix"><h4><span class="mark" aria-hidden="true">!</span>Pass or swap away</h4>' + champListHTML(p.champFocus ? p.champFocus.drop : null, "No repeat champion grades well below your average \u2014 the leaks are on one-off picks.", "down") + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="augment-section">' +
+              '<h4 class="champ-head">Augment checks</h4>' +
+              '<p class="augment-note">Population win rates from MayhemMeta (snapshot Nov 4, 2026), from tens of thousands of games per augment — how the pick does for everyone, not just in this group.</p>' +
+              '<div class="champ-cols">' +
+                '<div class="col fix"><h4><span class="mark" aria-hidden="true">!</span>Trap picks — taken 3+ times, weak for everyone</h4>' + augmentListHTML(p.trapPicks, "No repeat trap picks — nothing taken 3+ times sits at 48% or below population-wide.") + '</div>' +
+                '<div class="col good"><h4><span class="mark" aria-hidden="true">✓</span>Proven picks — taken 3+ times, strong for everyone</h4>' + augmentListHTML(p.valuePicks, "None of your repeat augments is above-average population-wide.") + '</div>' +
+              '</div>' +
             '</div>' +
             '<div class="card-extra">' +
               '<span class="xs">Avg dmg <b>' + fmt(p.avgDmg) + '</b></span>' +
