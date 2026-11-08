@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <title>ARAM Mayhem — Team Assessment</title>
+    <style>
+      :root {
+        --bg: #101613;
+        --bg-2: #0b0f0d;
+        --surface: #1a211d;
+        --surface-2: #212a25;
+        --ink: #ece7d8;
+        --ink-2: #c3bda9;
+        --ink-3: #8f8a79;
+        --line: #333d36;
+        --line-strong: #4a554d;
+        --gold: #d9b64a;
+        --gold-bright: #e8cc6a;
+        --gold-soft: #2e2a18;
+        --teal: #4fc4ab;
+        --teal-soft: #17332c;
+        --red: #e07a5f;
+        --red-soft: #38211b;
+        --win: #4fc4ab;
+        --loss: #e07a5f;
+        --header-bg: #0b100e;
+        --header-ink: #f2ecdc;
+        --header-ink-2: #9fb0a4;
+        --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+        --font-body: "Barlow", "Segoe UI", system-ui, -apple-system, sans-serif;
+        --font-head: "Barlow Condensed", "Arial Narrow", "Helvetica Neue Condensed", system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-body);
+        font-size: 16px;
+        line-height: 1.55;
+      }
+      .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 56px; }
+
+      /* ---------- Header ---------- */
+      header.masthead {
+        background: var(--header-bg);
+        color: var(--header-ink);
+        border-bottom: 3px solid var(--gold-bright);
+      }
+      .masthead-inner { max-width: 1080px; margin: 0 auto; padding: 34px 20px 28px; }
+      .mode-line {
+        font-family: var(--font-mono);
+        font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+        color: var(--gold-bright); margin: 0 0 10px;
+        display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center;
+      }
+      .mode-line .dot { color: var(--header-ink-2); }
+      h1 {
+        font-family: var(--font-head);
+        font-weight: 700; font-size: clamp(36px, 6.5vw, 56px);
+        line-height: .98; letter-spacing: .02em; margin: 0 0 12px;
+        text-transform: uppercase;
+      }
+      h1 .accent { color: var(--gold-bright); }
+      .lede { color: var(--header-ink-2); font-size: 17px; max-width: 680px; margin: 0 0 20px; }
+      .lede strong { color: var(--header-ink); font-weight: 600; }
+      .freshness { display: flex; flex-wrap: wrap; gap: 10px; }
+      .freshness .chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        border: 1px solid rgba(242,236,220,.25);
+        border-radius: 999px; padding: 6px 14px;
+        font-size: 13.5px; color: var(--header-ink);
+        background: rgba(242,236,220,.06);
+      }
+      .freshness .chip b { color: var(--gold-bright); font-weight: 700; }
+      .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--gold-bright); flex: none; }
+
+      /* ---------- Sections ---------- */
+      section { margin-top: 40px; }
+      .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+      h2 {
+        font-family: var(--font-head);
+        font-size: 28px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: .03em; margin: 0;
+      }
+      .section-note { color: var(--ink-3); font-size: 14px; margin: 0; max-width: 560px; }
+
+      /* ---------- Win-weight toggle ---------- */
+      .toggle-card {
+        background: var(--surface); border: 1px solid var(--line);
+        border-top: 3px solid var(--gold-bright);
+        border-radius: 12px; box-shadow: var(--shadow);
+        padding: 16px 20px; margin-top: 28px;
+        display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap;
+      }
+      .toggle-label {
+        font-family: var(--font-head); font-size: 17px; font-weight: 700;
+        letter-spacing: .04em; text-transform: uppercase; color: var(--ink);
+      }
+      .toggle-group { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 999px; overflow: hidden; }
+      .toggle-group button {
+        font-family: var(--font-mono); font-size: 15px; font-weight: 700;
+        background: var(--surface-2); color: var(--ink-2);
+        border: 0; padding: 8px 20px; cursor: pointer;
+      }
+      .toggle-group button + button { border-left: 1px solid var(--line-strong); }
+      .toggle-group button:hover { color: var(--ink); }
+      .toggle-group button.active { background: var(--gold-bright); color: #171408; }
+      .toggle-group button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
+      .toggle-note { color: var(--ink-3); font-size: 14px; margin: 0; flex: 1; min-width: 240px; }
+      .toggle-note b { font-family: var(--font-mono); color: var(--ink-2); font-weight: 700; }
+
+      /* ---------- Standings table ---------- */
+      .table-card {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 12px; box-shadow: var(--shadow); overflow: hidden;
+      }
+      table { width: 100%; border-collapse: collapse; }
+      thead th {
+        font-family: var(--font-head);
+        font-size: 13.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+        color: var(--ink-2); text-align: right;
+        padding: 14px 12px 10px; border-bottom: 2px solid var(--line-strong);
+        white-space: nowrap;
+      }
+      thead th:first-child { text-align: left; padding-left: 16px; }
+      thead th:last-child { padding-right: 16px; }
+      thead th.ov-head { background: var(--gold-soft); color: var(--ink); }
+      tbody td {
+        padding: 13px 12px; border-bottom: 1px solid var(--line);
+        text-align: right; font-variant-numeric: tabular-nums; vertical-align: middle;
+      }
+      tbody td:first-child { padding-left: 16px; }
+      tbody td:last-child { padding-right: 16px; }
+      tbody tr:last-child td { border-bottom: 0; }
+      tbody tr:hover { background: var(--surface-2); }
+      td.rank-cell { text-align: left; font-family: var(--font-mono); font-weight: 700; color: var(--ink-3); width: 44px; }
+      tr.first td.rank-cell { color: var(--gold); }
+      td.player-cell { text-align: left; }
+      .p-name { font-weight: 700; font-size: 16.5px; display: block; line-height: 1.25; white-space: nowrap; }
+      .num { font-family: var(--font-mono); font-size: 15px; font-weight: 500; white-space: nowrap; }
+      .num.big { font-weight: 700; }
+      td.ov-cell { background: var(--gold-soft); }
+      .ov-value { font-family: var(--font-mono); font-size: 22px; font-weight: 700; line-height: 1.1; }
+      tr.first .ov-value { color: var(--gold-bright); }
+      .rec { font-family: var(--font-mono); font-weight: 700; font-size: 15px; white-space: nowrap; }
+      .rec .w { color: var(--win); } .rec .l { color: var(--loss); } .rec .dash { color: var(--ink-3); margin: 0 2px; }
+
+      /* ---------- Player cards ---------- */
+      .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+      .card {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 12px; box-shadow: var(--shadow); overflow: hidden;
+      }
+      .card.first { border-top: 3px solid var(--gold-bright); }
+      .card-top { padding: 18px 20px 0; }
+      .card-id { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+      .card h3 {
+        font-family: var(--font-head);
+        font-size: 26px; font-weight: 700; margin: 0; line-height: 1.05;
+        display: inline-flex; align-items: baseline; gap: 10px;
+      }
+      .card-rank {
+        font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+        color: var(--header-ink); background: #333d36;
+        border-radius: 999px; padding: 3px 10px; white-space: nowrap;
+      }
+      .card.first .card-rank { background: var(--gold-bright); color: #171408; }
+      .ov-tag {
+        font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+        color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line);
+        border-radius: 999px; padding: 4px 12px; white-space: nowrap;
+      }
+      .ov-tag b { color: var(--gold); font-size: 15px; }
+      .card-stats {
+        display: flex; flex-wrap: wrap; gap: 6px 18px;
+        padding: 10px 0 14px; border-bottom: 1px solid var(--line); margin-top: 10px;
+      }
+      .card-stats .cs { font-size: 13.5px; color: var(--ink-3); }
+      .card-stats .cs b { font-family: var(--font-mono); color: var(--ink); font-size: 14.5px; font-weight: 700; }
+      .crit-list { padding: 14px 20px 18px; display: grid; gap: 13px; }
+      .crit-row { display: grid; gap: 4px; }
+      .crit-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+      .crit-name {
+        font-size: 12.5px; font-weight: 700; letter-spacing: .09em;
+        text-transform: uppercase; color: var(--ink-2);
+      }
+      .crit-name .crit-wt { color: var(--ink-3); font-weight: 600; letter-spacing: .02em; }
+      .crit-val { font-family: var(--font-mono); font-size: 16px; font-weight: 700; white-space: nowrap; }
+      .crit-val.na { color: var(--ink-3); }
+      .crit-bar { height: 7px; border-radius: 4px; background: var(--bg-2); overflow: hidden; }
+      .crit-bar .fill { height: 100%; border-radius: 4px; background: var(--gold-bright); }
+      .crit-bar .fill.hi { background: var(--teal); }
+      .crit-bar .fill.lo { background: var(--red); }
+      .crit-bar.empty .fill { background: transparent; }
+      .crit-ctx { font-size: 13.5px; color: var(--ink-3); line-height: 1.45; }
+      .crit-ctx b { font-family: var(--font-mono); color: var(--ink-2); font-size: 13px; font-weight: 700; }
+      .delta-up { color: var(--teal); font-weight: 700; }
+      .delta-down { color: var(--red); font-weight: 700; }
+      /* Economy & Build sub-bars */
+      .sub-bars { display: grid; gap: 7px; margin-top: 2px; }
+      .sub-bar-row { display: grid; grid-template-columns: 74px 1fr 40px; align-items: center; gap: 10px; }
+      .sub-bar-name { font-size: 12.5px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+      .sub-bar-val { font-family: var(--font-mono); font-size: 13.5px; font-weight: 700; text-align: right; }
+      .sub-bar-val.na { color: var(--ink-3); }
+      /* Reason chips */
+      .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+      .reason-chip {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-size: 12.5px; line-height: 1.35; color: var(--ink-2);
+        background: var(--surface-2); border: 1px solid var(--line);
+        border-radius: 999px; padding: 4px 11px;
+      }
+      .reason-chip b { font-family: var(--font-mono); color: var(--gold); font-size: 12px; font-weight: 700; }
+      .dq-note { font-size: 12.5px; color: var(--ink-3); margin-top: 5px; line-height: 1.45; }
+      .legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 12px; font-size: 13.5px; color: var(--ink-3); }
+      .legend .sw { display: inline-block; width: 22px; height: 6px; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
+      .legend .sw.hi { background: var(--teal); } .legend .sw.mid { background: var(--gold-bright); } .legend .sw.lo { background: var(--red); }
+
+      /* ---------- Methodology ---------- */
+      .method {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 12px; box-shadow: var(--shadow); padding: 22px 24px 10px;
+      }
+      .method h3 {
+        font-family: var(--font-head); font-size: 19px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: .04em; margin: 18px 0 6px;
+      }
+      .method h3:first-child { margin-top: 0; }
+      .method p, .method li { font-size: 15px; color: var(--ink-2); }
+      .method p { margin: 0 0 10px; max-width: 880px; }
+      .method ul { margin: 0 0 12px; padding-left: 20px; max-width: 880px; }
+      .method li { margin-bottom: 7px; }
+      .method strong { color: var(--ink); }
+      .method .formula {
+        font-family: var(--font-mono); font-size: 14px; color: var(--ink);
+        background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+        padding: 11px 14px; margin: 0 0 12px; overflow-x: auto; white-space: nowrap;
+      }
+
+      /* ---------- Footer ---------- */
+      footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 18px; }
+      footer p { color: var(--ink-3); font-size: 13.5px; margin: 0 0 8px; max-width: 880px; }
+      footer p:last-child { margin-bottom: 0; }
+
+      /* ---------- Mobile ---------- */
+      @media (max-width: 820px) {
+        .cards { grid-template-columns: 1fr; }
+        .table-card { background: transparent; border: 0; box-shadow: none; overflow: visible; }
+        .stack-table, .stack-table tbody, .stack-table tr, .stack-table td { display: block; width: 100%; }
+        .stack-table thead { display: none; }
+        .stack-table tbody tr {
+          background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+          box-shadow: var(--shadow); padding: 14px 16px 8px; margin-bottom: 12px;
+        }
+        .stack-table tbody tr:hover { background: var(--surface); }
+        .stack-table tbody td {
+          border-bottom: 0; padding: 5px 0; text-align: left;
+          display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+        }
+        .stack-table tbody td::before {
+          content: attr(data-label);
+          font-family: var(--font-head); font-size: 13.5px; font-weight: 600;
+          letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); flex: none;
+        }
+        .stack-table td.player-cell { display: block; padding: 0 0 10px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
+        .stack-table td.player-cell::before { content: none; }
+        .stack-table td.rank-cell { display: none; }
+        .stack-table td.ov-cell { background: transparent; }
+        .method { padding: 18px 18px 6px; }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        tbody tr, .card { transition: background-color .15s ease; }
+        .crit-bar .fill { transition: width .3s ease; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="masthead-inner">
+        <p class="mode-line"><span>League of Legends</span><span class="dot">•</span><span>ARAM: Mayhem</span><span class="dot">•</span><span>NA Server</span></p>
+        <h1>ARAM Mayhem — <span class="accent">Team Assessment</span></h1>
+        <p class="lede">Six players scored on <strong>seven criteria</strong> — per-game performance graded against the same role archetype, plus a Winning Impact term that credits wins above what the dealt champions predict.</p>
+        <div class="freshness">
+          <span class="chip"><span class="pulse"></span>Stats as of <b>November 8, 2026</b></span>
+          <span class="chip">Each player's own last 100 games. No together-games filter.</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="toggle-card" role="group" aria-label="Winning Impact weight">
+        <span class="toggle-label" id="toggle-label">Winning Impact weight</span>
+        <div class="toggle-group" role="group" aria-labelledby="toggle-label">
+          <button type="button" data-w="0.1" aria-pressed="false">10%</button>
+          <button type="button" data-w="0.2" class="active" aria-pressed="true">20%</button>
+          <button type="button" data-w="0.3" aria-pressed="false">30%</button>
+        </div>
+        <p class="toggle-note">Overall = Performance × (1 − w) + Winning Impact × w. Switching the weight re-sorts the standings and the cards below. <b>20%</b> is the default.</p>
+      </div>
+
+      <section aria-labelledby="standings-h">
+        <div class="section-head">
+          <h2 id="standings-h">Standings</h2>
+          <p class="section-note">Overall at the selected Winning Impact weight. Performance and Winning Impact are fixed 0–100 scores; only the blend changes.</p>
+        </div>
+        <div class="table-card">
+          <table class="stack-table" id="standings-table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" style="text-align:left">Player</th>
+                <th scope="col" class="ov-head">Overall</th>
+                <th scope="col">Performance</th>
+                <th scope="col">Winning Impact</th>
+                <th scope="col">W–L</th>
+                <th scope="col">Win rate</th>
+              </tr>
+            </thead>
+            <tbody id="standings-body"><!-- rows rendered by script --></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="players-h">
+        <div class="section-head">
+          <h2 id="players-h">Player by Player</h2>
+          <p class="section-note">The seven criteria behind each player's scores — bars are 0–100, graded within the player's role archetype.</p>
+        </div>
+        <div class="cards" id="player-cards"><!-- cards rendered by script --></div>
+        <div class="legend" aria-hidden="true">
+          <span><span class="sw hi"></span>55+ — a real strength</span>
+          <span><span class="sw mid"></span>45–54 — around archetype average</span>
+          <span><span class="sw lo"></span>Below 45 — a drag on the score</span>
+        </div>
+      </section>
+
+      <section aria-labelledby="method-h">
+        <div class="section-head">
+          <h2 id="method-h">How the Rating Works</h2>
+        </div>
+        <div class="method">
+          <p>Based on <strong>each player's own last 100 ARAM Mayhem games</strong>, remakes under 5 minutes excluded. There is no together-games filter: every player is scored on their own last 100 games. Per-game grades are percentiles within the player's <strong>role archetype (Damage / Frontline / Support)</strong>, so tanks and supports are not judged on carry stats. This page reports <strong>only numbers backed by the match data</strong> — every score below traces to a stat the match records contain.</p>
+          <h3>The seven criteria</h3>
+          <p class="formula">Overall = (1 − w) × Performance + w × Winning Impact &nbsp;·&nbsp; Performance blends the six graded criteria below</p>
+          <ul>
+            <li><strong>Winning Impact — weight 20</strong> (the toggle at the top selects 10 / 20 / 30). Wins above expectation: each game's expected result comes from the played champion's population win rate, so a player is credited for winning more than the champions they were dealt predict — not for raw win rate on strong champions.</li>
+            <li><strong>Team Damage % — 20.</strong> The player's share of their own team's damage dealt, graded within their archetype.</li>
+            <li><strong>Frontline Absorption — 15.</strong> Share of the team's damage taken, scored <strong>only in frontline (tank/bruiser) games</strong>; in other games the criterion is skipped and the remaining performance weights renormalize. A game whose deaths-per-minute lands in the frontline pool's worst quartile has its absorption score capped, so running in and dying is not rewarded.</li>
+            <li><strong>Economy &amp; Build — 15</strong> (Gold per minute 7.5 + Item Fit 7.5). Gold per minute is graded within the archetype. Item Fit grades the final build — champion/core synergy, answering the enemy comp's biggest need, covering a team gap, and gold efficiency — with the reason for every deduction shown on the card.</li>
+            <li><strong>KDA — 10.</strong> (Kills + assists) ÷ deaths, ratio capped, graded within the archetype.</li>
+            <li><strong>Augments — 10.</strong> How well the picked augments fit: champion synergy, team/enemy comp fit, build synergy, and the pick's population win-rate evidence on that champion.</li>
+            <li><strong>Kill Participation — 10.</strong> (Kills + assists) ÷ team kills.</li>
+          </ul>
+          <h3>What the data cannot show</h3>
+          <ul>
+            <li><strong>Augments are scored as "Augment Fit," not selection.</strong> Match data records only the augment a player <em>picked</em> — never the other options they were offered — so best-of-three selection cannot be scored from the data. The score judges whether the pick itself was good.</li>
+            <li><strong>Item Fit scores final builds only.</strong> The data shows the build a game ended with, not when each item was bought, so purchase timing and order are not scored.</li>
+            <li><strong>Healing, shielding and crowd control</strong> are not published per player for this mode, which is why Frontline Absorption (damage-taken share in frontline games) stands in as the durability measure.</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer>
+        <p>Scores computed from match data for the six players' own last 100 ARAM Mayhem games each. Population win rates and augment baselines are dated snapshots and are directional context, not part of any individual grade except where the criteria above say so.</p>
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+      const DATA = {"method": "seven-criteria scoring v1 (2026-11-08): per-game archetype-percentile subscores (KDA 10, GPM 7.5, Item Fit 7.5, Augments 10, Team Damage 20, KP 10, Frontline Absorption 15 frontline games only, weights renormalize over available subscores); Performance = (0.55*mean + 0.20*median + 0.10*Q1)/0.85 of game grades; Winning Impact = 100*Phi(z) of wins above champion population expectation; Overall blends Performance with Winning Impact at 10/20/30%", "generated_from": "2026-11-08", "players": {"I3i3oy": {"games": 100, "wins": 54, "losses": 46, "winrate": 54.0, "performance": 63.14, "winning_impact": 77.95, "expected_wins": 50.15, "wins_above": 3.85, "z": 0.771, "overall": {"0.1": 64.62, "0.2": 66.1, "0.3": 67.58}, "mean_subscores": {"kda": 54.1, "gpm": 70.1, "item_fit": 92.6, "aug": 62.1, "dmg": 65.0, "kp": 52.4, "front": 41.3}, "frontline_games": 14, "frontline_capped_games": 3, "item_fit_reasons_sample": [{"reason": "No boots item at game end", "count": 53}, {"reason": "2 unfinished component items (1,900g) at game end", "count": 2}, {"reason": "Anti-heal item Mortal Reminder (3,000g) bought with only 1 enemy healer(s) on the enemy team", "count": 2}, {"reason": "2 unfinished component items (1,600g) at game end", "count": 2}, {"reason": "Only 67% of build gold in AD-profile items on Trundle (12,833g of 19,033g)", "count": 1}, {"reason": "%pen item bought vs 3 tank-built enemies (Sylas, Morgana, Leona)", "count": 1}, {"reason": "No %pen item vs 3 tank-built enemies (Senna, Gwen, RekSai)", "count": 1}, {"reason": "%pen item bought vs 3 tank-built enemies (Jax, Maokai, Rakan)", "count": 1}], "data_quality": {"aug_picks_missing_baseline": 30}}, "CreamiNataella": {"games": 100, "wins": 53, "losses": 47, "winrate": 53.0, "performance": 55.57, "winning_impact": 78.05, "expected_wins": 49.13, "wins_above": 3.87, "z": 0.774, "overall": {"0.1": 57.82, "0.2": 60.07, "0.3": 62.31}, "mean_subscores": {"kda": 58.8, "gpm": 47.4, "item_fit": 84.0, "aug": 56.6, "dmg": 48.0, "kp": 56.4, "front": 59.4}, "frontline_games": 12, "frontline_capped_games": 0, "item_fit_reasons_sample": [{"reason": "No boots item at game end", "count": 98}, {"reason": "Anti-heal item Morellonomicon (2,850g) bought with only 1 enemy healer(s) on the enemy team", "count": 14}, {"reason": "Anti-heal item Morellonomicon (2,850g) bought with only 0 enemy healer(s) on the enemy team", "count": 9}, {"reason": "Anti-heal item Oblivion Orb (800g) bought with only 0 enemy healer(s) on the enemy team", "count": 4}, {"reason": "2 unfinished component items (1,200g) at game end", "count": 4}, {"reason": "Anti-heal item Oblivion Orb (800g) bought with only 1 enemy healer(s) on the enemy team", "count": 3}, {"reason": "2 unfinished component items (1,500g) at game end", "count": 2}, {"reason": "2 unfinished component items (1,100g) at game end", "count": 2}], "data_quality": {"aug_picks_missing_baseline": 26}}, "pikabUwU": {"games": 100, "wins": 51, "losses": 49, "winrate": 51.0, "performance": 47.34, "winning_impact": 60.92, "expected_wins": 49.62, "wins_above": 1.38, "z": 0.277, "overall": {"0.1": 48.7, "0.2": 50.05, "0.3": 51.41}, "mean_subscores": {"kda": 50.4, "gpm": 39.4, "item_fit": 85.5, "aug": 50.4, "dmg": 38.7, "kp": 46.2, "front": 41.7}, "frontline_games": 11, "frontline_capped_games": 1, "item_fit_reasons_sample": [{"reason": "Anti-heal item Morellonomicon (2,850g) bought with only 0 enemy healer(s) on the enemy team", "count": 11}, {"reason": "Anti-heal item Morellonomicon (2,850g) bought with only 1 enemy healer(s) on the enemy team", "count": 10}, {"reason": "No boots item at game end", "count": 5}, {"reason": "Anti-heal item Mortal Reminder (3,000g) bought with only 0 enemy healer(s) on the enemy team", "count": 3}, {"reason": "Anti-heal item Oblivion Orb (800g) bought with only 0 enemy healer(s) on the enemy team", "count": 3}, {"reason": "2 unfinished component items (1,950g) at game end", "count": 2}, {"reason": "2 unfinished component items (2,100g) at game end", "count": 2}, {"reason": "No %pen item vs 3 tank-built enemies (Sylas, Morgana, Leona)", "count": 1}], "data_quality": {"aug_picks_missing_baseline": 35}}, "Ohwutahel": {"games": 100, "wins": 53, "losses": 47, "winrate": 53.0, "performance": 53.53, "winning_impact": 68.53, "expected_wins": 50.59, "wins_above": 2.41, "z": 0.483, "overall": {"0.1": 55.03, "0.2": 56.53, "0.3": 58.03}, "mean_subscores": {"kda": 37.7, "gpm": 47.5, "item_fit": 87.2, "aug": 56.0, "dmg": 52.3, "kp": 52.6, "front": 60.7}, "frontline_games": 51, "frontline_capped_games": 9, "item_fit_reasons_sample": [{"reason": "No boots item at game end", "count": 4}, {"reason": "2 unfinished component items (1,600g) at game end", "count": 4}, {"reason": "Only 56% of build gold in AD-profile items on Yorick (8,700g of 15,400g)", "count": 2}, {"reason": "3 unfinished component items (2,000g) at game end", "count": 2}, {"reason": "%pen item bought vs 3 tank-built enemies (Jax, Maokai, Rakan)", "count": 1}, {"reason": "%pen item bought vs 2 tank-built enemies (Zaahen, Udyr)", "count": 1}, {"reason": "2 unfinished component items (800g) at game end", "count": 1}, {"reason": "No %pen item vs 3 tank-built enemies (Illaoi, XinZhao, Varus)", "count": 1}], "data_quality": {"aug_picks_missing_baseline": 35}}, "Vincent Chan": {"games": 100, "wins": 49, "losses": 51, "winrate": 49.0, "performance": 63.74, "winning_impact": 49.71, "expected_wins": 49.04, "wins_above": -0.04, "z": -0.007, "overall": {"0.1": 62.34, "0.2": 60.94, "0.3": 59.53}, "mean_subscores": {"kda": 56.3, "gpm": 64.2, "item_fit": 89.8, "aug": 51.2, "dmg": 68.8, "kp": 62.8, "front": 45.4}, "frontline_games": 15, "frontline_capped_games": 0, "item_fit_reasons_sample": [{"reason": "Anti-heal item Morellonomicon (2,850g) bought with only 1 enemy healer(s) on the enemy team", "count": 4}, {"reason": "No boots item at game end", "count": 2}, {"reason": "Only 36% of build gold in AD-profile items on Smolder (6,200g of 17,000g)", "count": 1}, {"reason": "%pen item bought vs 3 tank-built enemies (Sylas, Morgana, Leona)", "count": 1}, {"reason": "%pen item bought vs 3 tank-built enemies (Senna, Gwen, RekSai)", "count": 1}, {"reason": "%pen item bought vs 3 tank-built enemies (Jax, Maokai, Rakan)", "count": 1}, {"reason": "%pen item bought vs 3 tank-built enemies (Chogath, Skarner, TahmKench)", "count": 1}, {"reason": "%pen item bought vs 3 tank-built enemies (Swain, Sett, Maokai)", "count": 1}], "data_quality": {"aug_picks_missing_baseline": 40}}, "Mashbrains": {"games": 100, "wins": 46, "losses": 54, "winrate": 46.0, "performance": 38.27, "winning_impact": 14.27, "expected_wins": 51.33, "wins_above": -5.33, "z": -1.068, "overall": {"0.1": 35.87, "0.2": 33.47, "0.3": 31.07}, "mean_subscores": {"kda": 42.7, "gpm": 31.4, "item_fit": 84.5, "aug": 52.0, "dmg": 27.3, "kp": 29.7, "front": 24.4}, "frontline_games": 27, "frontline_capped_games": 0, "item_fit_reasons_sample": [{"reason": "2 unfinished component items (2,175g) at game end", "count": 4}, {"reason": "No boots item at game end", "count": 3}, {"reason": "2 unfinished component items (2,100g) at game end", "count": 3}, {"reason": "2 unfinished component items (850g) at game end", "count": 2}, {"reason": "2 unfinished component items (1,800g) at game end", "count": 2}, {"reason": "2 unfinished component items (1,600g) at game end", "count": 2}, {"reason": "2 unfinished component items (1,200g) at game end", "count": 2}, {"reason": "No %pen item vs 2 tank-built enemies (Seraphine, TahmKench)", "count": 1}], "data_quality": {"aug_picks_missing_baseline": 85}}}, "standings": {"0.1": [{"player": "I3i3oy", "overall": 64.62}, {"player": "Vincent Chan", "overall": 62.34}, {"player": "CreamiNataella", "overall": 57.82}, {"player": "Ohwutahel", "overall": 55.03}, {"player": "pikabUwU", "overall": 48.7}, {"player": "Mashbrains", "overall": 35.87}], "0.2": [{"player": "I3i3oy", "overall": 66.1}, {"player": "Vincent Chan", "overall": 60.94}, {"player": "CreamiNataella", "overall": 60.07}, {"player": "Ohwutahel", "overall": 56.53}, {"player": "pikabUwU", "overall": 50.05}, {"player": "Mashbrains", "overall": 33.47}], "0.3": [{"player": "I3i3oy", "overall": 67.58}, {"player": "CreamiNataella", "overall": 62.31}, {"player": "Vincent Chan", "overall": 59.53}, {"player": "Ohwutahel", "overall": 58.03}, {"player": "pikabUwU", "overall": 51.41}, {"player": "Mashbrains", "overall": 31.07}]}, "data_problems": {"games_dropped_duration_lt5": 10, "augment_id_missing:I3i3oy": 30, "augment_id_missing:CreamiNataella": 26, "augment_id_missing:pikabUwU": 35, "augment_id_missing:Ohwutahel": 35, "augment_id_missing:Vincent Chan": 40, "augment_id_missing:Mashbrains": 85}};
+      const state = { w: 0.2 };
+
+      const esc = (s) => String(s == null ? "" : s)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+      const isNum = (v) => typeof v === "number" && isFinite(v);
+      const fmt1 = (v) => isNum(v) ? v.toFixed(1) : "—";
+      const fmtSigned1 = (v) => isNum(v) ? (v > 0 ? "+" : "") + v.toFixed(1) : "—";
+      const barCls = (v) => !isNum(v) ? "" : (v >= 55 ? "hi" : (v < 45 ? "lo" : ""));
+      const overallOf = (p) => p.performance * (1 - state.w) + p.winning_impact * state.w;
+
+      function sortedPlayers() {
+        return Object.entries(DATA.players || {})
+          .map(([name, p]) => ({ name, p, overall: overallOf(p) }))
+          .sort((a, b) => (b.overall - a.overall)
+            || (b.p.performance - a.p.performance)
+            || a.name.localeCompare(b.name));
+      }
+
+      function barHtml(value) {
+        if (!isNum(value)) return '<div class="crit-bar empty"><div class="fill" style="width:0%"></div></div>';
+        const w = Math.max(0, Math.min(100, value));
+        return '<div class="crit-bar"><div class="fill ' + barCls(value) + '" style="width:' + w + '%"></div></div>';
+      }
+      function valHtml(value) {
+        return isNum(value)
+          ? '<span class="crit-val">' + fmt1(value) + '</span>'
+          : '<span class="crit-val na">—</span>';
+      }
+      function critRow(name, weight, value, ctxHtml, extraHtml) {
+        return '<div class="crit-row">'
+          + '<div class="crit-head"><span class="crit-name">' + esc(name)
+          + (weight ? ' <span class="crit-wt">· ' + esc(weight) + '</span>' : '')
+          + '</span>' + valHtml(value) + '</div>'
+          + barHtml(value)
+          + (ctxHtml ? '<div class="crit-ctx">' + ctxHtml + '</div>' : '')
+          + (extraHtml || '')
+          + '</div>';
+      }
+      function subBarRow(label, value) {
+        return '<div class="sub-bar-row"><span class="sub-bar-name">' + esc(label) + '</span>'
+          + barHtml(value)
+          + (isNum(value)
+              ? '<span class="sub-bar-val">' + fmt1(value) + '</span>'
+              : '<span class="sub-bar-val na">—</span>')
+          + '</div>';
+      }
+
+      function standingsRow(e, idx) {
+        const p = e.p;
+        const wr = isNum(p.winrate) ? fmt1(p.winrate) + "%" : "—";
+        return '<tr' + (idx === 0 ? ' class="first"' : '') + '>'
+          + '<td class="rank-cell" data-label="#">' + (idx + 1) + '</td>'
+          + '<td class="player-cell"><span class="p-name">' + esc(e.name) + '</span></td>'
+          + '<td class="ov-cell" data-label="Overall"><span class="ov-value">' + fmt1(e.overall) + '</span></td>'
+          + '<td data-label="Performance"><span class="num">' + fmt1(p.performance) + '</span></td>'
+          + '<td data-label="Winning Impact"><span class="num">' + fmt1(p.winning_impact) + '</span></td>'
+          + '<td data-label="W–L"><span class="rec"><span class="w">' + p.wins + '</span><span class="dash">–</span><span class="l">' + p.losses + '</span></span></td>'
+          + '<td data-label="Win rate"><span class="num">' + wr + '</span></td>'
+          + '</tr>';
+      }
+
+      function playerCard(e, idx) {
+        const p = e.p, ms = p.mean_subscores || {}, dq = p.data_quality || {};
+        const rows = [];
+
+        // 1 — Winning Impact
+        const waCls = isNum(p.wins_above) ? (p.wins_above >= 0 ? "delta-up" : "delta-down") : "";
+        const wiCtx = '<span class="' + waCls + '">' + fmtSigned1(p.wins_above) + ' wins</span>'
+          + ' vs expectation (' + fmt1(p.expected_wins) + ' expected from the champions dealt)';
+        rows.push(critRow("Winning Impact", "w" + Math.round(state.w * 100), p.winning_impact, wiCtx));
+
+        // 2 — Team Damage %
+        rows.push(critRow("Team Damage %", "20", ms.dmg,
+          "Share of own team's damage dealt, graded within archetype"));
+
+        // 3 — Frontline Absorption (— when no frontline games; never 0)
+        const fg = p.frontline_games || 0;
+        if (!isNum(ms.front) || fg === 0) {
+          rows.push(critRow("Frontline Absorption", "15", null, "No frontline games in this window"));
+        } else {
+          rows.push(critRow("Frontline Absorption", "15", ms.front,
+            "Damage-taken share across <b>" + fg + '</b> frontline games'));
+        }
+
+        // 4 — Economy & Build: GPM + Item Fit sub-bars (+ Item Fit reason chips)
+        const econValue = (isNum(ms.gpm) && isNum(ms.item_fit)) ? (ms.gpm + ms.item_fit) / 2
+          : (isNum(ms.gpm) ? ms.gpm : (isNum(ms.item_fit) ? ms.item_fit : null));
+        let econExtra = '<div class="sub-bars">'
+          + subBarRow("Gold / min", ms.gpm)
+          + subBarRow("Item Fit", ms.item_fit)
+          + '</div>';
+        if (!isNum(ms.item_fit)) {
+          econExtra += '<p class="dq-note">Item Fit not scored in this dataset — final builds were not available for these games.</p>';
+        }
+        const reasons = Array.isArray(p.item_fit_reasons_sample) ? p.item_fit_reasons_sample : [];
+        if (reasons.length) {
+          econExtra += '<div class="chip-row">'
+            + reasons.map(r => '<span class="reason-chip">' + esc(r.reason) + ' <b>×' + (r.count || 0) + '</b></span>').join("")
+            + '</div>';
+        }
+        rows.push(critRow("Economy & Build", "15", econValue,
+          "Gold per minute + final-build fit (reasons for Item Fit deductions below)", econExtra));
+
+        // 5 — KDA
+        rows.push(critRow("KDA", "10", ms.kda, "(Kills + assists) ÷ deaths, graded within archetype"));
+
+        // 6 — Augments (+ baseline-missing note)
+        let augExtra = "";
+        const missing = dq.aug_picks_missing_baseline || 0;
+        if (missing > 0) {
+          augExtra = '<p class="dq-note">' + missing + ' picks missing from population baselines (scored neutral)</p>';
+        }
+        rows.push(critRow("Augments", "10", ms.aug, "Augment Fit — quality of the picks made", augExtra));
+
+        // 7 — Kill Participation
+        rows.push(critRow("Kill Participation", "10", ms.kp, "(Kills + assists) ÷ team kills"));
+
+        const wr = isNum(p.winrate) ? fmt1(p.winrate) + "%" : "—";
+        return '<article class="card' + (idx === 0 ? " first" : "") + '">'
+          + '<div class="card-top"><div class="card-id">'
+          + '<h3><span class="card-rank">#' + (idx + 1) + '</span>' + esc(e.name) + '</h3>'
+          + '<span class="ov-tag">Overall <b>' + fmt1(e.overall) + '</b></span>'
+          + '</div>'
+          + '<div class="card-stats">'
+          + '<span class="cs">Record <b>' + p.wins + '–' + p.losses + '</b></span>'
+          + '<span class="cs">Win rate <b>' + wr + '</b></span>'
+          + '<span class="cs">Games <b>' + p.games + '</b></span>'
+          + '<span class="cs">Performance <b>' + fmt1(p.performance) + '</b></span>'
+          + '<span class="cs">Winning Impact <b>' + fmt1(p.winning_impact) + '</b></span>'
+          + '</div></div>'
+          + '<div class="crit-list">' + rows.join("") + '</div>'
+          + '</article>';
+      }
+
+      function render() {
+        const order = sortedPlayers();
+        document.getElementById("standings-body").innerHTML = order.map(standingsRow).join("");
+        document.getElementById("player-cards").innerHTML = order.map(playerCard).join("");
+      }
+
+      document.querySelectorAll(".toggle-group button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          state.w = parseFloat(btn.getAttribute("data-w"));
+          document.querySelectorAll(".toggle-group button").forEach((b) => {
+            const on = b === btn;
+            b.classList.toggle("active", on);
+            b.setAttribute("aria-pressed", on ? "true" : "false");
+          });
+          render();
+        });
+      });
+
+      render();
+    </script>
+  </body>
+</html>
